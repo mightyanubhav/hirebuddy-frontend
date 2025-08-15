@@ -1,0 +1,1 @@
+# hirebuddy-frontend
