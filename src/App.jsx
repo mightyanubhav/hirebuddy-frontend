@@ -1,8 +1,11 @@
+import NavBar from "./components/NavBar"
+import HeroSection3 from "./components/HeroSection3"
 function App() {
   return (
-   <>
-    <h1>Hi there this is a react app.</h1>
-   </>
+   <div className="font-serif">
+    <NavBar/>
+    <HeroSection3/>
+   </div>
   )
 }
 
