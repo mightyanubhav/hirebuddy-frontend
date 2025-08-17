@@ -51,7 +51,7 @@ const NavBar = () => {
   return (
     <div className="flex flex-col box-border w-full fixed top-0 left-0 z-50">
       {/* NAVBAR */}
-      <div className="flex h-24 p-3 bg-blue-200 items-center relative justify-between">
+      <div className="flex h-22 p-3 bg-blue-200 items-center relative justify-between">
         {/* LOGO */}
         <div className="min-w-55 flex flex-row items-center justify-center mr-1">
           <img

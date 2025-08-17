@@ -3,11 +3,11 @@ import hireBuddyImg from "../assets/hireBuddy.png";
 
 const animatedWords = [
   "Hangouts",
-  "Get-Rooms",
+  "Travel",
   "Find-Stay",
   "Shopping",
   "Daily-Task",
-  "Talk",
+  "Communication",
 ];
 
 export default function HeroSection3() {
@@ -42,12 +42,12 @@ export default function HeroSection3() {
   }, [displayedText, wordIndex, typing]);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden pt-24">
+    <section className="relative w-full bg-white overflow-hidden pt-22">
       <div className="mx-auto px-4 sm:px-8 pt-16 pb-14 flex flex-col lg:flex-row items-start relative z-10">
         {/* Left Section */}
         <div className="flex-1 z-20">
-          <h1 className="text-3xl xs:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
-            Made to assist with{" "}
+          <h1 className="text-2xl xs:text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4 leading-tight">
+            To assist you with{" "}
             <span
               className="inline-block bg-[#eef6ee] border border-[#5383dd] rounded px-3 py-1 text-blue-600 min-h-[2.5rem] font-mono transition-all duration-500"
               style={{ letterSpacing: "0.03em", whiteSpace: "pre" }}
