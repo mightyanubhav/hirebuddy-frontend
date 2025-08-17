@@ -7,7 +7,7 @@ const animatedWords = [
   "Find-Stay",
   "Shopping",
   "Daily-Task",
-  "Talk-anonymously",
+  "Talk",
 ];
 
 export default function HeroSection3() {
@@ -42,7 +42,7 @@ export default function HeroSection3() {
   }, [displayedText, wordIndex, typing]);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden">
+    <section className="relative w-full bg-white overflow-hidden pt-24">
       <div className="mx-auto px-4 sm:px-8 pt-16 pb-14 flex flex-col lg:flex-row items-start relative z-10">
         {/* Left Section */}
         <div className="flex-1 z-20">
@@ -58,14 +58,18 @@ export default function HeroSection3() {
             </span>
           </h1>
           <p className="text-base xs:text-lg md:text-xl text-black/80 mt-2 mb-8 max-w-2xl">
-            You don't need a separate database to handle transactions, rich
-            search, or generative AI. The world's most popular modern database
-            adapts and scales to handle all your application requirements.
+            Need help shopping, moving, or finding a room? Want a travel buddy,
+            a pickup at the station, or simply someone to talk to? Hire Buddy
+            connects you with the right person for every moment—making daily
+            life easier, more enjoyable, and stress-free.
           </p>
-          <div className="flex flex-col gap-4 xs:flex-row xs:gap-6 mb-14 items-center">
-            <button className="bg-blue-600 text-white px-8 py-4 rounded font-semibold shadow hover:bg-blue-700 transition">
+          <div className="flex flex-col gap-4 xs:flex-row xs:gap-6 mb-14 items-start">
+            <div
+              id="sign-up-button"
+              className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-800 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
+            >
               Get Started
-            </button>
+            </div>
             <button className="flex items-center text-blue-700 font-semibold hover:text-blue-800 text-lg">
               Learn more
               <span className="ml-2 text-2xl">&#8594;</span>
@@ -75,26 +79,24 @@ export default function HeroSection3() {
           <div className="flex flex-col sm:flex-row gap-10 mt-6">
             <div>
               <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                57K+
+                10K
+              </span>
+              <div className="text-black/80 text-base">Customers &rarr;</div>
+            </div>
+            <div>
+              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
+                27+
               </span>
               <div className="text-black/80 text-base">
-                Customers &rarr;
+                States across India &rarr;
               </div>
             </div>
             <div>
               <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                125+
+                100+
               </span>
               <div className="text-black/80 text-base">
-                Regions across AWS, Azure, Google Cloud &rarr;
-              </div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                175K+
-              </span>
-              <div className="text-black/80 text-base">
-                Developers join every month &rarr;
+                Customer join every month &rarr;
               </div>
             </div>
             <div>
@@ -102,22 +104,20 @@ export default function HeroSection3() {
                 #1
               </span>
               <div className="text-black/80 text-base">
-                Most used modern database &rarr;
+               First app of its kind &rarr;
               </div>
             </div>
           </div>
         </div>
 
         {/* Right: Always-Connected Patch and Animated Image */}
-        <div className="absolute right-0 top-0 h-full w-[50vw] flex items-center justify-center z-10">
+        <div className="absolute right-0 top-0 h-full w-[50vw] flex items-center justify-center -z-100">
           {/* Patch background */}
           <div className="h-full w-full rounded-tl-[240px] bg-gradient-to-br from-blue-100 to-blue-300 flex items-center justify-center shadow-2xl">
             <img
               src={hireBuddyImg}
               alt="dashboard"
-              className={`img-float transition-all duration-500 object-contain mx-auto ${
-                "w-36 sm:w-52 md:w-64 lg:w-80 xl:w-96"
-              }`}
+              className={`img-float transition-all duration-500 object-contain mx-auto ${"w-36 sm:w-52 md:w-64 lg:w-80 xl:w-96"}`}
               style={{
                 minWidth: "100px",
                 maxHeight: 320,

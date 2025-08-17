@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faMagnifyingGlass, faGlobe, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown, faMagnifyingGlass, faGlobe, faBars, faXmark, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import hireBuddyLogo from "../assets/hireBuddy.png";
 
 const NavBar = () => {
@@ -49,9 +49,9 @@ const NavBar = () => {
   );
 
   return (
-    <div className="flex flex-col box-border w-full">
+    <div className="flex flex-col box-border w-full fixed top-0 left-0 z-50">
       {/* NAVBAR */}
-      <div className="flex h-26 p-3 bg-blue-200 items-center relative justify-between">
+      <div className="flex h-24 p-3 bg-blue-200 items-center relative justify-between">
         {/* LOGO */}
         <div className="min-w-55 flex flex-row items-center justify-center mr-1">
           <img
@@ -76,7 +76,7 @@ const NavBar = () => {
             {/* Sign Up always visible */}
             <div
               id="sign-up-button"
-              className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-700 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
+              className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-800 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
             >
               Sign In
             </div>
@@ -170,11 +170,11 @@ const NavBar = () => {
                   className="flex items-center cursor-pointer hover:text-blue-700 ml-4"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
-                  <span>More</span>
+                  <span><FontAwesomeIcon icon={faEllipsis} /></span>
                   <FontAwesomeIcon icon={faCaretDown} className="ml-1" />
                 </button>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 min-w-[150px] bg-white shadow-lg rounded p-2 z-10 flex flex-col gap-2">
+                  <div className="absolute right-0 mt-2 min-w-[150px] bg-white shadow-lg rounded p-2 z-100 flex flex-col gap-2">
                     {dropItems}
                   </div>
                 )}
