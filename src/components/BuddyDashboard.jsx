@@ -468,7 +468,7 @@ const BuddyDashboard = () => {
                                   : "bg-gray-100 mr-8"
                               }`}
                             >
-                              <p>{message.content}</p>
+                              <p>{message.text}</p>
                               <p className="text-xs text-gray-500 mt-1">
                                 {new Date(message.createdAt).toLocaleString()}
                               </p>

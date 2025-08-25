@@ -10,6 +10,7 @@ const BookingsTab = ({
   setNewMessage,
   fetchMessages,
   sendMessage,
+  userId
 }) => {
   return (
     <div className="py-6">
@@ -29,6 +30,7 @@ const BookingsTab = ({
               setNewMessage={setNewMessage}
               fetchMessages={fetchMessages}
               sendMessage={sendMessage}
+              userId={userId}
             />
           ))}
         </div>

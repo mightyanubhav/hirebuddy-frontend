@@ -5,7 +5,7 @@ import BuddiesTab from "./BuddiesTab";
 import BookingsTab from "./BookingsTab";
 import BookingModal from "./BookingModel";
 import { useAuth } from "../context/AuthContext";
-
+import { jwtDecode } from "jwt-decode";
 
 const CustomerDashboard = () => {
   const [activeTab, setActiveTab] = useState("buddies");
@@ -25,51 +25,63 @@ const CustomerDashboard = () => {
     date: "",
   });
   const { user } = useAuth();
-// Fetch buddies (from bookings)
-// Fetch buddies (from bookings)
-const fetchBuddies = useCallback(async () => {
-  setLoading(true);
-  try {
-    const token = user?.token;
-    console.log(token);
-    if (!token) {
-      console.error("No token found");
-      setLoading(false);
-      return;
+
+  const getUserId = () => {
+    if (!user?.token) return null;
+    try {
+      const decoded = jwtDecode(user.token);
+      // Try different possible fields for user ID
+      return decoded.id || decoded.userId || decoded._id || decoded.sub;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
     }
+  };
 
-    // Build query string from filters (only include non-empty ones)
-    const queryParams = new URLSearchParams();
-    if (filters.location) queryParams.append("location", filters.location);
-    if (filters.expertise) queryParams.append("expertise", filters.expertise);
-    if (filters.date) queryParams.append("date", filters.date);
+  const userId = getUserId();
 
-    const url = `http://localhost:7777/customer/buddies${
-      queryParams.toString() ? `?${queryParams.toString()}` : ""
-    }`;
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const fetchBuddies = useCallback(async () => {
+    setLoading(true);
+    try {
+      const token = user?.token;
+      if (!token) {
+        console.error("No token found");
+        setLoading(false);
+        return;
+      }
 
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setBuddies(data.buddies || []);
-    } else {
-      console.error("Failed to fetch buddies");
+      // Build query string from filters (only include non-empty ones)
+      const queryParams = new URLSearchParams();
+      if (filters.location) queryParams.append("location", filters.location);
+      if (filters.expertise) queryParams.append("expertise", filters.expertise);
+      if (filters.date) queryParams.append("date", filters.date);
+
+      const url = `http://localhost:7777/customer/buddies${
+        queryParams.toString() ? `?${queryParams.toString()}` : ""
+      }`;
+
+      const response = await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+      
+        setBuddies(data.buddies || []);
+      } else {
+        console.error("Failed to fetch buddies");
+        setBuddies([]);
+      }
+    } catch (error) {
+      console.error("Error fetching buddies:", error);
       setBuddies([]);
+    } finally {
+      setLoading(false);
     }
-  } catch (error) {
-    console.error("Error fetching buddies:", error);
-    setBuddies([]);
-  } finally {
-    setLoading(false);
-  }
-}, [user?.token, filters]);
-
+  }, [user?.token, filters]);
 
   // Fetch bookings
   const fetchBookings = useCallback(async () => {
@@ -96,29 +108,32 @@ const fetchBuddies = useCallback(async () => {
   }, [user?.token]);
 
   // Fetch messages
-  const fetchMessages = useCallback(async (bookingId) => {
-    try {
-      const token = user?.token;
-      const response = await fetch(
-        `http://localhost:7777/customer/messages?bookingId=${bookingId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  const fetchMessages = useCallback(
+    async (bookingId) => {
+      try {
+        const token = user?.token;
+        const response = await fetch(
+          `http://localhost:7777/customer/messages?bookingId=${bookingId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-      if (response.ok) {
-        const data = await response.json();
-        setMessages(data.messages);
-        setSelectedBooking(bookingId);
-      } else {
-        console.error("Failed to fetch messages");
+        if (response.ok) {
+          const data = await response.json();
+          setMessages(data.messages);
+          setSelectedBooking(bookingId);
+        } else {
+          console.error("Failed to fetch messages");
+        }
+      } catch (error) {
+        console.error("Error fetching messages:", error);
       }
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-    }
-  }, [user?.token]);
+    },
+    [user?.token]
+  );
 
   // Handle booking
   const handleBooking = async (e) => {
@@ -193,10 +208,10 @@ const fetchBuddies = useCallback(async () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-        
+
         {activeTab === "buddies" && (
           <BuddiesTab
             loading={loading}
@@ -208,7 +223,7 @@ const fetchBuddies = useCallback(async () => {
             setShowBookingModal={setShowBookingModal}
           />
         )}
-        
+
         {activeTab === "bookings" && (
           <BookingsTab
             loading={loading}
@@ -219,6 +234,7 @@ const fetchBuddies = useCallback(async () => {
             setNewMessage={setNewMessage}
             fetchMessages={fetchMessages}
             sendMessage={sendMessage}
+            userId={userId}
           />
         )}
       </div>

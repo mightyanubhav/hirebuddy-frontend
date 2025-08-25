@@ -9,21 +9,8 @@ const BookingCard = ({
   setNewMessage,
   fetchMessages,
   sendMessage,
+  userId
 }) => {
-  const getUserId = () => {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-
-    try {
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      return payload.id;
-    } catch (e) {
-      console.error("Error decoding token:", e);
-      return null;
-    }
-  };
-
-  const userId = getUserId();
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
