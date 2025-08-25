@@ -1,4 +1,3 @@
-
 // components/MessagesSection.jsx
 const MessagesSection = ({
   messages,
@@ -11,20 +10,33 @@ const MessagesSection = ({
     <div className="mt-6 border-t pt-4">
       <h4 className="font-medium mb-4">Messages</h4>
       <div className="space-y-4 max-h-60 overflow-y-auto p-2">
-        {messages.map((message) => (
-          <div
-            key={message._id}
-            className={`p-3 rounded-lg ${
-              message.sender === userId ? "bg-blue-100 ml-8" : "bg-gray-100 mr-8"
-            }`}
-          >
-            <p>{message.content}</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {new Date(message.createdAt).toLocaleString()}
-            </p>
-          </div>
-        ))}
+        {messages.map((message) => {
+          const isSender = message.sender === userId;
+          return (
+            <div
+              key={message._id}
+              className={`flex ${isSender ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`max-w-xs p-3 rounded-lg shadow ${
+                  isSender
+                    ? "bg-blue-500 text-white rounded-br-none"
+                    : "bg-gray-200 text-gray-900 rounded-bl-none"
+                }`}
+              >
+                <p>{message.text}</p>
+                <p className="text-[10px] text-gray-700 mt-1 text-right">
+                  {new Date(message.createdAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
+
       <div className="mt-4 flex">
         <input
           type="text"
