@@ -10,7 +10,7 @@ const Header = () => {
     const token = user?.token;
     if (token) {
       axios
-        .get("/api/credits", { headers: { Authorization: `Bearer ${token}` } })
+        .get("http://localhost:7777/customer/credits", { headers: { Authorization: `Bearer ${token}` } })
         .then((res) => setCredits(res.data.credits))
         .catch((err) => console.error("Error fetching credits:", err));
     }
