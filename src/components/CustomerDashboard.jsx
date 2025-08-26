@@ -40,6 +40,24 @@ const CustomerDashboard = () => {
 
   const userId = getUserId();
 
+  const [credits, setCredits] = useState(0);
+
+  const fetchCredits = useCallback(async () => {
+    if (!user?.token) return;
+    try {
+      const response = await fetch("http://localhost:7777/customer/credits", {
+        headers: { Authorization: `Bearer ${user.token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setCredits(data.credits);
+      } else {
+        console.error("Failed to fetch credits");
+      }
+    } catch (error) {
+      console.error("Error fetching credits:", error);
+    }
+  }, [user?.token]);
 
   const fetchBuddies = useCallback(async () => {
     setLoading(true);
@@ -136,36 +154,40 @@ const CustomerDashboard = () => {
   );
 
   // Handle booking
-  const handleBooking = async (e) => {
-    e.preventDefault();
-    try {
-      const token = user?.token;
-      const response = await fetch("http://localhost:7777/customer/book", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          buddyId: selectedBuddy._id,
-          date: bookingDate,
-          location: bookingLocation,
-        }),
-      });
+  // inside CustomerDashboard
+const handleBooking = async (e) => {
+  e.preventDefault();
+  try {
+    const token = user?.token;
+    const response = await fetch("http://localhost:7777/customer/book", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        buddyId: selectedBuddy._id,
+        date: bookingDate,
+        location: bookingLocation,
+      }),
+    });
 
-      if (response.ok) {
-        alert("Booking request sent successfully!");
-        setShowBookingModal(false);
-        fetchBookings();
-      } else {
-        const errorData = await response.json();
-        alert(`Booking failed: ${errorData.error}`);
-      }
-    } catch (error) {
-      console.error("Error creating booking:", error);
-      alert("Booking failed. Please try again.");
+    if (response.ok) {
+      alert("Booking request sent successfully!");
+      setShowBookingModal(false);
+      fetchBookings();
+
+      // ✅ reduce credits by 1 after success
+      setCredits((prev) => Math.max(prev - 1, 0));
+    } else {
+      const errorData = await response.json();
+      alert(`Booking failed: ${errorData.error}`);
     }
-  };
+  } catch (error) {
+    console.error("Error creating booking:", error);
+    alert("Booking failed. Please try again.");
+  }
+};
 
   // Send message
   const sendMessage = useCallback(async () => {
@@ -198,16 +220,17 @@ const CustomerDashboard = () => {
 
   // Load tab data
   useEffect(() => {
+    fetchCredits();
     if (activeTab === "buddies") {
       fetchBuddies();
     } else if (activeTab === "bookings") {
       fetchBookings();
     }
-  }, [activeTab, fetchBuddies, fetchBookings]);
+  }, [activeTab, fetchBuddies, fetchBookings, fetchCredits]);
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <Header credits={credits} setCredits={setCredits} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -221,6 +244,7 @@ const CustomerDashboard = () => {
             fetchBuddies={fetchBuddies}
             setSelectedBuddy={setSelectedBuddy}
             setShowBookingModal={setShowBookingModal}
+            credits={credits}
           />
         )}
 

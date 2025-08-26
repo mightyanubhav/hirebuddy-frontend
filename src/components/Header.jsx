@@ -1,20 +1,19 @@
-import { useState, useEffect } from "react";
+// import {  useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 
-const Header = () => {
-  const [credits, setCredits] = useState(0);
+const Header = ({ credits, setCredits }) => {
   const { user } = useAuth();
 
-  useEffect(() => {
-    const token = user?.token;
-    if (token) {
-      axios
-        .get("http://localhost:7777/customer/credits", { headers: { Authorization: `Bearer ${token}` } })
-        .then((res) => setCredits(res.data.credits))
-        .catch((err) => console.error("Error fetching credits:", err));
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   const token = user?.token;
+  //   if (token) {
+  //     axios
+  //       .get("http://localhost:7777/customer/credits", { headers: { Authorization: `Bearer ${token}` } })
+  //       .then((res) => setCredits(res.data.credits))
+  //       .catch((err) => console.error("Error fetching credits:", err));
+  //   }
+  // }, [user]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");

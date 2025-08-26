@@ -10,6 +10,7 @@ const BuddiesTab = ({
   fetchBuddies,
   setSelectedBuddy,
   setShowBookingModal,
+  credits
 }) => {
   return (
     <div className="py-6">
@@ -31,6 +32,7 @@ const BuddiesTab = ({
               buddy={buddy}
               setSelectedBuddy={setSelectedBuddy}
               setShowBookingModal={setShowBookingModal}
+              credits={credits}
             />
           ))}
         </div>
