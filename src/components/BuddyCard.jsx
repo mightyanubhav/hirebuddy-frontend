@@ -1,8 +1,18 @@
 // components/BuddyCard.jsx
-const BuddyCard = ({ buddy, setSelectedBuddy, setShowBookingModal }) => {
+const BuddyCard = ({ buddy, setSelectedBuddy, setShowBookingModal, credits }) => {
+  const handleBookClick = () => {
+    if (credits <= 0) {
+      alert("You don’t have enough credits. Please buy credits first.");
+      return;
+    }
+    setSelectedBuddy(buddy);
+    setShowBookingModal(true);
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="p-6">
+        {/* Buddy Info */}
         <div className="flex items-center mb-4">
           <div className="h-12 w-12 rounded-full bg-blue-100 flex items-center justify-center">
             <span className="text-blue-600 font-bold text-lg">
@@ -17,6 +27,7 @@ const BuddyCard = ({ buddy, setSelectedBuddy, setShowBookingModal }) => {
           </div>
         </div>
 
+        {/* Buddy Details */}
         <div className="mb-4">
           <p className="text-gray-600">
             <span className="font-medium">Location:</span>{" "}
@@ -40,14 +51,17 @@ const BuddyCard = ({ buddy, setSelectedBuddy, setShowBookingModal }) => {
           </p>
         </div>
 
+        {/* Book Button */}
         <button
-          onClick={() => {
-            setSelectedBuddy(buddy);
-            setShowBookingModal(true);
-          }}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md"
+          onClick={handleBookClick}
+          disabled={credits <= 0}
+          className={`w-full py-2 px-4 rounded-md text-white ${
+            credits <= 0
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Book This Buddy
+          {credits <= 0 ? "No Credits" : "Book This Buddy"}
         </button>
       </div>
     </div>
