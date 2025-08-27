@@ -2,8 +2,11 @@
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
 import { backend_url } from "../context/HardCodedValues";
+import { useNavigate } from "react-router-dom";
+
 const Header = ({ credits, setCredits }) => {
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const token = user?.token;
@@ -17,7 +20,7 @@ const Header = ({ credits, setCredits }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   // helper to load Razorpay SDK dynamically

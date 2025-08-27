@@ -2,9 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import SocketMessages from "../components/SocketMessages";
 import { backend_url } from "../context/HardCodedValues";
+import { useNavigate } from "react-router-dom";
 
 // Buddy Dashboard Component
 const BuddyDashboard = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("bookings");
   const [bookings, setBookings] = useState([]);
   const [earnings, setEarnings] = useState(null);
@@ -308,7 +310,7 @@ const BuddyDashboard = () => {
             <button
               onClick={() => {
                 localStorage.removeItem("token");
-                window.location.href = "/login";
+                navigate("/login");
               }}
               className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
             >

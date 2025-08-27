@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FaGoogle,
   FaFacebook,
@@ -13,6 +14,7 @@ import {
 import { Link } from "react-router-dom";
 import { backend_url } from "../context/HardCodedValues";
 const SignupPage = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1: Signup form, 2: OTP verification
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -82,7 +84,7 @@ const SignupPage = () => {
         setMessage("Signup successful! Redirecting to login...");
         // Redirect to login after a delay
         setTimeout(() => {
-          window.location.href = "/login";
+          navigate("/login");
         }, 2000);
       } else {
         setMessage(data.error || "Invalid OTP");
@@ -290,12 +292,12 @@ const SignupPage = () => {
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
                     Already have an account?{" "}
-                    <a
-                      href="/login"
+                    <Link
+                      to="/login"
                       className="text-blue-600 hover:text-blue-800 font-medium"
                     >
                       Log in
-                    </a>
+                    </Link>
                   </p>
                 </div>
               </form>

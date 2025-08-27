@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import hireBuddyLogo from "../assets/hireBuddy.png";
+import { Link } from "react-router-dom";
 
 // Additional Feature Section Component
 const FeaturesSection = () => {
@@ -143,48 +144,48 @@ const Footer = () => {
             </div>
             <p className="text-gray-400 mb-6">Making daily life easier, more enjoyable, and stress-free.</p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link to="" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-facebook-f"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link to="" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-twitter"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link to="" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-instagram"></i>
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link to="" className="text-gray-400 hover:text-white transition-colors">
                 <i className="fab fa-linkedin-in"></i>
-              </a>
+              </Link>
             </div>
           </div>
           
           <div>
             <h3 className="font-semibold text-lg mb-6">Product</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Case Studies</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Reviews</a></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Features</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Pricing</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Case Studies</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Reviews</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="font-semibold text-lg mb-6">Company</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">About</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Careers</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Partners</a></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">About</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Careers</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Partners</Link></li>
             </ul>
           </div>
           
           <div>
             <h3 className="font-semibold text-lg mb-6">Help</h3>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Support</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Support</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="" className="text-gray-400 hover:text-white transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
         </div>
