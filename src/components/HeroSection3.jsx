@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import hireBuddyImg from "../assets/hireBuddy.png";
-
+import { Link } from "react-router-dom";
 const animatedWords = [
   "Hangouts",
   "Travel",
@@ -64,12 +64,13 @@ export default function HeroSection3() {
             life easier, more enjoyable, and stress-free.
           </p>
           <div className="flex flex-col gap-4 xs:flex-row xs:gap-6 mb-14 items-start">
-            <div
+            <Link
+              to='/signup'
               id="sign-up-button"
               className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-800 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
             >
               Get Started
-            </div>
+            </Link>
             <button className="flex items-center text-blue-700 font-semibold hover:text-blue-800 text-lg">
               Learn more
               <span className="ml-2 text-2xl">&#8594;</span>
