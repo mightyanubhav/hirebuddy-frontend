@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
+import SocketMessages from "../components/SocketMessages";
+
 
 // Buddy Dashboard Component
 const BuddyDashboard = () => {
@@ -22,6 +24,7 @@ const BuddyDashboard = () => {
   });
   const [availabilityDates, setAvailabilityDates] = useState([]);
   const [newDate, setNewDate] = useState("");
+  const [chatMode, setChatMode] = useState(null);
 
   const { user } = useAuth();
 
@@ -106,28 +109,28 @@ const BuddyDashboard = () => {
   );
 
   // Fetch buddy profile
- const fetchProfile = useCallback(async () => {
-  try {
-    const token = user?.token;
-    const response = await fetch("http://localhost:7777/buddy/profile", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+  const fetchProfile = useCallback(async () => {
+    try {
+      const token = user?.token;
+      const response = await fetch("http://localhost:7777/buddy/profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    if (response.ok) {
-      const data = await response.json();
+      if (response.ok) {
+        const data = await response.json();
 
-      // 👇 Save everything: name, email, and buddyProfile
-      setProfileData(data);
-      setAvailabilityDates(data.buddyProfile?.availableDates || []);
-    } else {
-      console.error("Failed to fetch profile");
+        // 👇 Save everything: name, email, and buddyProfile
+        setProfileData(data);
+        setAvailabilityDates(data.buddyProfile?.availableDates || []);
+      } else {
+        console.error("Failed to fetch profile");
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
     }
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-  }
-}, [user?.token]);
+  }, [user?.token]);
 
   // Update buddy profile
   const updateProfile = async (e) => {
@@ -445,58 +448,83 @@ const BuddyDashboard = () => {
                             </button>
                           </>
                         )}
+
+                        {/* History Messages */}
                         <button
-                          onClick={() => fetchMessages(booking._id)}
+                          onClick={() => {
+                            fetchMessages(booking._id);
+                            setChatMode("history");
+                          }}
                           className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md"
                         >
                           Messages
+                        </button>
+
+                        {/* Live Chat */}
+                        <button
+                          onClick={() => {
+                            setSelectedBooking(booking._id);
+                            setChatMode("live");
+                          }}
+                          className="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded-md"
+                        >
+                          Live Chat
                         </button>
                       </div>
                     </div>
 
                     {/* Messages Section */}
-                    {selectedBooking === booking._id && (
-                      <div className="mt-6 border-t pt-4">
-                        <h4 className="font-medium mb-4">Messages</h4>
-                        <div className="space-y-4 max-h-60 overflow-y-auto p-2">
-                          {messages.map((message) => (
-                            <div
-                              key={message._id}
-                              className={`p-3 rounded-lg ${
-                                message.sender === userId
-                                  ? "bg-blue-100 ml-8"
-                                  : "bg-gray-100 mr-8"
-                              }`}
-                            >
-                              <p>{message.text}</p>
-                              <p className="text-xs text-gray-500 mt-1">
-                                {new Date(message.createdAt).toLocaleString()}
-                              </p>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="mt-4 flex">
-                          <input
-                            type="text"
-                            value={newMessage}
-                            onChange={(e) => setNewMessage(e.target.value)}
-                            className="flex-1 border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Type your message..."
-                            onKeyPress={(e) => {
-                              if (e.key === "Enter") {
-                                sendMessage();
-                              }
-                            }}
-                          />
-                          <button
-                            onClick={sendMessage}
-                            className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-r-md"
-                          >
-                            Send
-                          </button>
-                        </div>
-                      </div>
-                    )}
+                    {selectedBooking === booking._id && chatMode === "history" && (
+  <div className="mt-6 border-t pt-4">
+    <h4 className="font-medium mb-4">Messages</h4>
+    <div className="space-y-4 max-h-60 overflow-y-auto p-2">
+      {messages.map((message) => (
+        <div
+          key={message._id}
+          className={`p-3 rounded-lg ${
+            message.sender === userId
+              ? "bg-blue-100 ml-8"
+              : "bg-gray-100 mr-8"
+          }`}
+        >
+          <p>{message.text}</p>
+          <p className="text-xs text-gray-500 mt-1">
+            {new Date(message.createdAt).toLocaleString()}
+          </p>
+        </div>
+      ))}
+    </div>
+    <div className="mt-4 flex">
+      <input
+        type="text"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        className="flex-1 border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Type your message..."
+        onKeyPress={(e) => {
+          if (e.key === "Enter") {
+            sendMessage();
+          }
+        }}
+      />
+      <button
+        onClick={sendMessage}
+        className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-r-md"
+      >
+        Send
+      </button>
+    </div>
+  </div>
+)}
+
+{selectedBooking === booking._id && chatMode === "live" && (
+  <div className="mt-6 border-t pt-4">
+    <h4 className="font-medium mb-4">Live Chat</h4>
+    {/* Use your SocketMessages component here */}
+    <SocketMessages bookingId={booking._id} userId={userId} />
+  </div>
+)}
+
                   </div>
                 ))}
               </div>

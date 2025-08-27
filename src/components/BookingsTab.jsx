@@ -1,44 +1,52 @@
 // components/BookingsTab.jsx
+import { useState } from "react";
 import BookingCard from "./BookingCard";
 
 const BookingsTab = ({
-  loading,
   bookings,
+  loading,
   messages,
   newMessage,
-  selectedBooking,
   setNewMessage,
   fetchMessages,
   sendMessage,
-  userId
+  userId,
+  updateBookingStatus, // buddy only
 }) => {
-  return (
-    <div className="py-6">
-      {loading ? (
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {bookings.map((booking) => (
-            <BookingCard
-              key={booking._id}
-              booking={booking}
-              messages={messages}
-              newMessage={newMessage}
-              selectedBooking={selectedBooking}
-              setNewMessage={setNewMessage}
-              fetchMessages={fetchMessages}
-              sendMessage={sendMessage}
-              userId={userId}
-            />
-          ))}
-        </div>
-      )}
+  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [chatMode, setChatMode] = useState(null); // "history" or "live"
 
-      {bookings.length === 0 && !loading && (
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-12">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {bookings.map((booking) => (
+        <BookingCard
+          key={booking._id}
+          booking={booking}
+          messages={messages}
+          newMessage={newMessage}
+          setNewMessage={setNewMessage}
+          fetchMessages={fetchMessages}
+          sendMessage={sendMessage}
+          userId={userId}
+          selectedBooking={selectedBooking}
+          setSelectedBooking={setSelectedBooking}
+          chatMode={chatMode}
+          setChatMode={setChatMode}
+          updateBookingStatus={updateBookingStatus} // only used for Buddy side
+        />
+      ))}
+
+      {bookings.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-gray-500">You don't have any bookings yet.</p>
+          <p className="text-gray-500">You don&apos;t have any bookings yet.</p>
         </div>
       )}
     </div>
