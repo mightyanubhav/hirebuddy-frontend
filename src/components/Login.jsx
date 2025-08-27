@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { Link } from 'react-router-dom';
+import { backend_url } from '../context/HardCodedValues';
+
 const Login = () => {
   const [formData, setFormData] = useState({
     phone: '',
@@ -59,7 +61,7 @@ const validateForm = () => {
     setLoginStatus(null);
     
     try {
-      const response = await fetch('http://localhost:7777/user/login', {
+      const response = await fetch(`${backend_url}/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
