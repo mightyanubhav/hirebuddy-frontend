@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faMagnifyingGlass, faGlobe, faBars, faXmark, faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import hireBuddyLogo from "../assets/hireBuddy.png";
+
 
 const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -53,13 +53,9 @@ const NavBar = () => {
       {/* NAVBAR */}
       <div className="flex h-22 p-3 bg-blue-200 items-center relative justify-between">
         {/* LOGO */}
-        <div className="min-w-55 flex flex-row items-center justify-center mr-1">
-          <img
-            src={hireBuddyLogo}
-            alt="hire-buddy logo"
-            className="h-10 w-14 mr-2"
-          />
-          <p className="font-extrabold text-lg">HireBuddy</p>
+        <div className="min-w-50  bg-gray-50 h-16 border-blue-300 rounded-3xl mr-3 flex flex-row items-center justify-center ">
+          
+          <p className="font-extrabold text-lg text-blue-700">HireBuddy</p>
         </div>
 
         {/* Mobile: <999px */}
