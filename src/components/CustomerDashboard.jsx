@@ -6,6 +6,7 @@ import BookingsTab from "./BookingsTab";
 import BookingModal from "./BookingModel";
 import { useAuth } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
+import { backend_url } from "../context/HardCodedValues";
 
 const CustomerDashboard = () => {
   const [activeTab, setActiveTab] = useState("buddies");
@@ -45,7 +46,7 @@ const CustomerDashboard = () => {
   const fetchCredits = useCallback(async () => {
     if (!user?.token) return;
     try {
-      const response = await fetch("http://localhost:7777/customer/credits", {
+      const response = await fetch(`${backend_url}/customer/credits`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
       if (response.ok) {
@@ -75,7 +76,7 @@ const CustomerDashboard = () => {
       if (filters.expertise) queryParams.append("expertise", filters.expertise);
       if (filters.date) queryParams.append("date", filters.date);
 
-      const url = `http://localhost:7777/customer/buddies${
+      const url = `${backend_url}/customer/buddies${
         queryParams.toString() ? `?${queryParams.toString()}` : ""
       }`;
 
@@ -106,7 +107,7 @@ const CustomerDashboard = () => {
     setLoading(true);
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/customer/bookings", {
+      const response = await fetch(`${backend_url}/customer/bookings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -131,7 +132,7 @@ const CustomerDashboard = () => {
       try {
         const token = user?.token;
         const response = await fetch(
-          `http://localhost:7777/customer/messages?bookingId=${bookingId}`,
+          `${backend_url}/customer/messages?bookingId=${bookingId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -159,7 +160,7 @@ const handleBooking = async (e) => {
   e.preventDefault();
   try {
     const token = user?.token;
-    const response = await fetch("http://localhost:7777/customer/book", {
+    const response = await fetch(`${backend_url}/customer/book`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -195,7 +196,7 @@ const handleBooking = async (e) => {
 
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/customer/messages", {
+      const response = await fetch(`${backend_url}/customer/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

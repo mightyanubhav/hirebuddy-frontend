@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faMagnifyingGlass, faGlobe, faBars, faXmark, faEllipsis } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -44,7 +44,7 @@ const NavBar = () => {
         <FontAwesomeIcon icon={faCaretDown} className="ml-2" />
       </div>
       <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">Support</div>
-      <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">Log in</div>
+      <Link to='/login' className="cursor-pointer hover:text-blue-700 transition-colors duration-200">Log in</Link>
     </>
   );
 
@@ -70,12 +70,13 @@ const NavBar = () => {
               <FontAwesomeIcon icon={faBars} size="xl" />
             </button>
             {/* Sign Up always visible */}
-            <div
+            <Link
+            to="/signup"
               id="sign-up-button"
               className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-800 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
             >
               Sign In
-            </div>
+            </Link>
 
             {/* Hamburger Side Drawer */}
             {(hamburgerOpen || drawerClosing) && (
@@ -129,12 +130,13 @@ const NavBar = () => {
                     </div>
                   </div>
 
-                  <div
+                  <Link
+                  to="/signup"
                     id="sign-up-button"
                     className="w-40 mt-6 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-700 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
                   >
                     Sign In
-                  </div>
+                  </Link>
                 </div>
               </div>
             )}
@@ -178,12 +180,13 @@ const NavBar = () => {
             </div>
 
             {/* Sign Up visible always */}
-            <div
+            <Link
+            to="/signup"
               id="sign-up-button"
               className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-700 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium ml-4"
             >
               Sign In
-            </div>
+            </Link>
           </>
         ) : (
           // Desktop: show everything fully
@@ -217,17 +220,18 @@ const NavBar = () => {
                 <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">
                   Support
                 </div>
-                <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">
+                <Link to='/login' className="cursor-pointer hover:text-blue-700 transition-colors duration-200">
                   Log in
-                </div>
+                </Link>
               </div>
               <div className="w-1/6 flex items-center justify-center">
-                <div
+                <Link
+                to="/signup"
                   id="sign-up-button"
                   className="w-40 h-12 text-white bg-blue-600 cursor-pointer hover:bg-blue-700 duration-300 rounded-sm hover:rounded-4xl flex items-center justify-center text-lg font-medium"
                 >
                   Sign In
-                </div>
+                </Link>
               </div>
             </div>
           </>

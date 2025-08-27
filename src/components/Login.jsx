@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+import { Link } from 'react-router-dom';
 const Login = () => {
   const [formData, setFormData] = useState({
     phone: '',
@@ -184,9 +184,9 @@ const validateForm = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -230,9 +230,9 @@ const validateForm = () => {
             </div>
 
             <div className="mt-3 text-center">
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+              <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
                 Create a new account
-              </a>
+              </Link>
             </div>
           </div>
         </div>

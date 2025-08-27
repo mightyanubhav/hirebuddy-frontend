@@ -1,7 +1,7 @@
 // import {  useEffect } from "react";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-
+import { backend_url } from "../context/HardCodedValues";
 const Header = ({ credits, setCredits }) => {
   const { user } = useAuth();
 
@@ -51,7 +51,7 @@ const Header = ({ credits, setCredits }) => {
     try {
       // create Razorpay order from backend
       const { data } = await axios.post(
-        "http://localhost:7777/payment/create-order",
+        `${backend_url}/payment/create-order`,
         { amount: 500 }, // Rs.500 for example
         { headers: { Authorization: `Bearer ${token}` } }
       );

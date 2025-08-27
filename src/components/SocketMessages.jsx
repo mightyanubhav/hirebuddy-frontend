@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
+import { backend_url } from "../context/HardCodedValues";
 
 // connect to backend on 7777
-const socket = io("http://localhost:7777", {
+const socket = io(`${backend_url}`, {
   transports: ["websocket"], // ensures direct websocket
   withCredentials: true,
 });

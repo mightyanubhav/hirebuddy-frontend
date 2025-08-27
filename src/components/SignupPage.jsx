@@ -1,19 +1,30 @@
-import { useState } from 'react';
-import { FaGoogle, FaFacebook, FaEye, FaEyeSlash, FaPhone, FaEnvelope, FaUser, FaLock, FaCheckCircle } from 'react-icons/fa';
-
+import { useState } from "react";
+import {
+  FaGoogle,
+  FaFacebook,
+  FaEye,
+  FaEyeSlash,
+  FaPhone,
+  FaEnvelope,
+  FaUser,
+  FaLock,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { backend_url } from "../context/HardCodedValues";
 const SignupPage = () => {
   const [step, setStep] = useState(1); // 1: Signup form, 2: OTP verification
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    role: 'buddy'
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    role: "buddy",
   });
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,69 +34,70 @@ const SignupPage = () => {
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      console.log(formData)
-      const response = await fetch('http://localhost:7777/user/signup', {
-        method: 'POST',
+      console.log(formData);
+      const response = await fetch(`${backend_url}/user/signup`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
         setStep(2);
-        setMessage('OTP sent successfully. Please check your phone.');
+        setMessage("OTP sent successfully. Please check your phone.");
       } else {
-        setMessage(data.error || 'Failed to sign up');
+        setMessage(data.error || "Failed to sign up");
       }
     } catch (e) {
       setMessage(e + "Netrowk error pls try again");
     }
-    
+
     setLoading(false);
   };
 
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
-      const response = await fetch('http://localhost:7777/user/verify-otp', {
-        method: 'POST',
+      const response = await fetch(`${backend_url}/user/verify-otp`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           phone: formData.phone,
-          otp: otp
+          otp: otp,
         }),
       });
-      
+
       const data = await response.json();
-      
+
       if (response.ok) {
-        setMessage('Signup successful! Redirecting to login...');
+        setMessage("Signup successful! Redirecting to login...");
         // Redirect to login after a delay
         setTimeout(() => {
-          window.location.href = '/login';
+          window.location.href = "/login";
         }, 2000);
       } else {
-        setMessage(data.error || 'Invalid OTP');
+        setMessage(data.error || "Invalid OTP");
       }
     } catch (e) {
-      setMessage(e + 'Network error. Please try again.');
+      setMessage(e + "Network error. Please try again.");
     }
-    
+
     setLoading(false);
   };
 
   const handleOAuthLogin = (provider) => {
-    // Redirect to OAuth endpoint
-    window.location.href = `/api/auth/${provider}`;
+    setMessage(`⚙️ ${provider} login is under work. Enter details manually.`);
+    // You can later enable this redirect when ready
+    // window.location.href = `/api/auth/${provider}`;
   };
 
   return (
@@ -96,7 +108,9 @@ const SignupPage = () => {
           <div className="md:w-1/2 bg-gradient-to-b from-blue-600 to-indigo-700 text-white p-10 hidden md:flex flex-col justify-center">
             <div className="mb-8">
               <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
-              <p className="opacity-90">Create an account to access exclusive features and content.</p>
+              <p className="opacity-90">
+                Create an account to access exclusive features and content.
+              </p>
             </div>
             <div className="space-y-4">
               <div className="flex items-center">
@@ -113,22 +127,32 @@ const SignupPage = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Right side - Form */}
           <div className="md:w-1/2 p-8">
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-gray-800">Create Account</h1>
+              <h1 className="text-3xl font-bold text-gray-800">
+                Create Account
+              </h1>
               <p className="text-gray-600 mt-2">
-                {step === 1 ? 'Fill in your details to get started' : 'Enter the OTP sent to your phone'}
+                {step === 1
+                  ? "Fill in your details to get started"
+                  : "Enter the OTP sent to your phone"}
               </p>
             </div>
-            
+
             {message && (
-              <div className={`p-3 rounded-lg mb-6 ${message.includes('successful') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+              <div
+                className={`p-3 rounded-lg mb-6 ${
+                  message.includes("successful")
+                    ? "bg-green-100 text-green-700"
+                    : "bg-red-100 text-red-700"
+                }`}
+              >
                 {message}
               </div>
             )}
-            
+
             {step === 1 ? (
               <form onSubmit={handleSignup} className="space-y-4">
                 <div className="space-y-4">
@@ -146,7 +170,7 @@ const SignupPage = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <FaEnvelope className="text-gray-400" />
@@ -161,7 +185,7 @@ const SignupPage = () => {
                       required
                     />
                   </div>
-                  
+
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <FaPhone className="text-gray-400" />
@@ -171,12 +195,17 @@ const SignupPage = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
+                      onFocus={() => {
+                        if (!formData.phone.startsWith("+91")) {
+                          setFormData((prev) => ({ ...prev, phone: "+91" }));
+                        }
+                      }}
                       className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Phone Number"
                       required
                     />
                   </div>
-                  
+
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <FaLock className="text-gray-400" />
@@ -202,9 +231,11 @@ const SignupPage = () => {
                       )}
                     </button>
                   </div>
-                  
+
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Role
+                    </label>
                     <select
                       name="role"
                       value={formData.role}
@@ -212,53 +243,57 @@ const SignupPage = () => {
                       className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     >
                       <option value="buddy">Buddy</option>
-                      <option value="admin">Admin</option>
                       <option value="customer">Customer</option>
                     </select>
                   </div>
                 </div>
-                
+
                 <button
                   type="submit"
                   disabled={loading}
                   className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50"
                 >
-                  {loading ? 'Sending OTP...' : 'Sign Up'}
+                  {loading ? "Sending OTP..." : "Sign Up"}
                 </button>
-                
+
                 <div className="relative my-6">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-gray-300"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                    <span className="px-2 bg-white text-gray-500">
+                      Or continue with
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => handleOAuthLogin('google')}
+                    onClick={() => handleOAuthLogin("google")}
                     className="inline-flex justify-center items-center space-x-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
                   >
                     <FaGoogle className="text-red-500" />
                     <span>Google</span>
                   </button>
-                  
+
                   <button
                     type="button"
-                    onClick={() => handleOAuthLogin('facebook')}
+                    onClick={() => handleOAuthLogin("facebook")}
                     className="inline-flex justify-center items-center space-x-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
                   >
                     <FaFacebook className="text-blue-600" />
                     <span>Facebook</span>
                   </button>
                 </div>
-                
+
                 <div className="text-center mt-6">
                   <p className="text-gray-600">
-                    Already have an account?{' '}
-                    <a href="/login" className="text-blue-600 hover:text-blue-800 font-medium">
+                    Already have an account?{" "}
+                    <a
+                      href="/login"
+                      className="text-blue-600 hover:text-blue-800 font-medium"
+                    >
                       Log in
                     </a>
                   </p>
@@ -270,14 +305,20 @@ const SignupPage = () => {
                   <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
                     <FaPhone className="h-6 w-6 text-blue-600" />
                   </div>
-                  <h2 className="mt-4 text-xl font-medium text-gray-900">Verify Your Phone</h2>
-                  <p className="mt-2 text-sm text-gray-600">
-                    We've sent a verification code to {formData.phone}
+                  <h2 className="mt-4 text-xl font-medium text-gray-900">
+                    Verify Your Phone
+                  </h2>
+                  <p className="mt-2 text-sm text-red-600">
+                    {/* We've sent a verification code to {formData.phone} */}
+                    Free Twilio subscription ended. Enter otp 12345
                   </p>
                 </div>
-                
+
                 <div>
-                  <label htmlFor="otp" className="block text-sm font-medium text-gray-700">
+                  <label
+                    htmlFor="otp"
+                    className="block text-sm font-medium text-gray-700"
+                  >
                     Verification Code
                   </label>
                   <div className="mt-1">
@@ -287,20 +328,20 @@ const SignupPage = () => {
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
                       className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-xl tracking-widest"
-                      placeholder="Enter 6-digit code"
+                      placeholder="Enter 5-digit code"
                       required
                     />
                   </div>
                 </div>
-                
+
                 <button
                   type="submit"
                   disabled={loading}
                   className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50"
                 >
-                  {loading ? 'Verifying...' : 'Verify OTP'}
+                  {loading ? "Verifying..." : "Verify OTP"}
                 </button>
-                
+
                 <div className="text-center">
                   <button
                     type="button"
@@ -310,10 +351,10 @@ const SignupPage = () => {
                     Change phone number
                   </button>
                 </div>
-                
+
                 <div className="text-center mt-4">
                   <p className="text-sm text-gray-600">
-                    Didn't receive the code?{' '}
+                    Didn't receive the code?{" "}
                     <button
                       type="button"
                       onClick={handleSignup}

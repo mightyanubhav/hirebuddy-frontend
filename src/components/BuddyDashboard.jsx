@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../context/AuthContext";
 import SocketMessages from "../components/SocketMessages";
-
+import { backend_url } from "../context/HardCodedValues";
 
 // Buddy Dashboard Component
 const BuddyDashboard = () => {
@@ -35,8 +35,8 @@ const BuddyDashboard = () => {
       try {
         const token = user?.token;
         const url = status
-          ? `http://localhost:7777/buddy/bookings?status=${status}`
-          : "http://localhost:7777/buddy/bookings";
+          ? `${backend_url}/buddy/bookings?status=${status}`
+          : `${backend_url}/buddy/bookings`;
 
         const response = await fetch(url, {
           headers: {
@@ -63,7 +63,7 @@ const BuddyDashboard = () => {
   const fetchEarnings = useCallback(async () => {
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/buddy/earnings", {
+      const response = await fetch(`${backend_url}/buddy/earnings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,7 +86,7 @@ const BuddyDashboard = () => {
       try {
         const token = user?.token;
         const response = await fetch(
-          `http://localhost:7777/buddy/messages?bookingId=${bookingId}`,
+          `${backend_url}/buddy/messages?bookingId=${bookingId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ const BuddyDashboard = () => {
   const fetchProfile = useCallback(async () => {
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/buddy/profile", {
+      const response = await fetch(`${backend_url}/buddy/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,7 +137,7 @@ const BuddyDashboard = () => {
     e.preventDefault();
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/buddy/profileEdit", {
+      const response = await fetch(`${backend_url}/buddy/profileEdit`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const BuddyDashboard = () => {
     e.preventDefault();
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/buddy/availability", {
+      const response = await fetch(`${backend_url}/buddy/availability`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -206,7 +206,7 @@ const BuddyDashboard = () => {
     try {
       const token = user?.token;
       const response = await fetch(
-        `http://localhost:7777/buddy/booking/${bookingId}/status`,
+        `${backend_url}/buddy/booking/${bookingId}/status`,
         {
           method: "PUT",
           headers: {
@@ -236,7 +236,7 @@ const BuddyDashboard = () => {
 
     try {
       const token = user?.token;
-      const response = await fetch("http://localhost:7777/buddy/messages", {
+      const response = await fetch(`${backend_url}/buddy/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
