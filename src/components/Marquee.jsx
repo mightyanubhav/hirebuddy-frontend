@@ -98,13 +98,12 @@ const Marquee = ({
 // Example usage in your landing page
 const MarqueeSection = () => {
   return (
-    <section className="py-10 bg-gray-50">
-      <div className="container mx-auto px-4">
-        {/* <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">Why People Love HireBuddy ? Scroll to know .</h2> */}
+    <section className="py-2 bg-gray-50">
+      <div className="container mx-auto px-4 py-4">
         <Marquee 
           speed="normal" 
           pauseOnHover={true}
-          className="border-y border-gray-200 py-2"
+          className="border-y border-gray-200 py-1"
         />
       </div>
     </section>

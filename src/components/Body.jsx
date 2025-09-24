@@ -207,55 +207,7 @@ const Body = () => {
       <CTASection />
       <Footer />
       
-      <style jsx global>{`
-        @keyframes slideInRight {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        
-        @keyframes slideOutRight {
-          from { transform: translateX(0); }
-          to { transform: translateX(100%); }
-        }
-        
-        .animate-slide-in-right {
-          animation: slideInRight 0.3s ease-out forwards;
-        }
-        
-        .animate-slide-out-right {
-          animation: slideOutRight 0.3s ease-in forwards;
-        }
-        
-        .blinking-cursor {
-          animation: blink 1s step-end infinite;
-        }
-        
-        @keyframes blink {
-          from, to { opacity: 1; }
-          50% { opacity: 0; }
-        }
-        
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
-        }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes gradientXY {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        
-        .animate-gradient-xy {
-          background-size: 200% 200%;
-          animation: gradientXY 8s ease infinite;
-        }
-      `}</style>
+      
     </div>
   );
 };

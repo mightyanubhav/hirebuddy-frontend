@@ -42,7 +42,7 @@ export default function HeroSection3() {
   }, [displayedText, wordIndex, typing]);
 
   return (
-    <section className="relative w-full bg-gray-50 overflow-hidden pt-22 ">
+    <section className="relative w-full bg-gray-50 overflow-hidden pt-22 -mt-6 sm:mt-0">
       <div className="mx-auto px-4 sm:px-8 pt-16 pb-14 flex flex-col lg:flex-row items-start relative z-10">
         {/* Left Section */}
         <div className="flex-1 z-20">
@@ -57,7 +57,7 @@ export default function HeroSection3() {
               <span className="blinking-cursor">|</span>
             </span>
           </h1>
-          <p className="text-base xs:text-lg md:text-xl text-black/80 mt-2 mb-8 max-w-2xl">
+          <p className="text-base xs:text-md md:text-lg text-black/80 mt-2 mb-8 max-w-2xl">
             Need help shopping, moving, or finding a room? Want a travel buddy,
             a pickup at the station, or simply someone to talk to? Hire Buddy
             connects you with the right person for every moment—making daily
@@ -77,16 +77,16 @@ export default function HeroSection3() {
             </button>
           </div>
           <div className="border-t border-gray-200 my-5"></div>
-          <div className="flex flex-col sm:flex-row gap-10 mt-6">
+          <div className="flex flex-col sm:flex-row gap-7 mt-6">
             <div>
               <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                10K
+                100+
               </span>
               <div className="text-black/80 text-base">Customers &rarr;</div>
             </div>
             <div>
               <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                27+
+                2+
               </span>
               <div className="text-black/80 text-base">
                 States across India &rarr;
@@ -94,7 +94,7 @@ export default function HeroSection3() {
             </div>
             <div>
               <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                100+
+                5+
               </span>
               <div className="text-black/80 text-base">
                 Customer join every month &rarr;

@@ -8,15 +8,6 @@ const Header = ({ credits, setCredits }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const token = user?.token;
-  //   if (token) {
-  //     axios
-  //       .get("http://localhost:7777/customer/credits", { headers: { Authorization: `Bearer ${token}` } })
-  //       .then((res) => setCredits(res.data.credits))
-  //       .catch((err) => console.error("Error fetching credits:", err));
-  //   }
-  // }, [user]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
