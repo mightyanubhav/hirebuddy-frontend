@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import NavBar from "./NavBar";
-import HeroSection3 from "./HeroSection3";
+import HeroSection from "./HeroSection";
 import Body from "./Body";
 import { MarqueeSection } from "./Marquee";
 import { backend_url } from "../context/HardCodedValues";
@@ -22,8 +22,10 @@ const Landing = () => {
   return (
     <>
       <NavBar />
-      <HeroSection3 />
-      <hr />
+
+      <HeroSection />
+      <div className="p-10 min-h-[60px] bg-gray-50 flex items-center justify-center  shadow-md">
+      </div>
       <MarqueeSection />
       <Body />
     </>

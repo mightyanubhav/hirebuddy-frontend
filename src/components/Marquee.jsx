@@ -12,7 +12,7 @@ import {
 
 const Marquee = ({ 
   items, 
-  direction = 'left',
+  direction = 'right',
   speed = 'normal',
   pauseOnHover = true,
   gradient = true,
@@ -20,13 +20,13 @@ const Marquee = ({
 }) => {
   // Default items if none provided
   const defaultItems = [
-    { id: 1, content: <><FontAwesomeIcon icon={faStar} className="text-yellow-400 mr-2" /> Trusted by 10K+ Users</> },
+    { id: 1, content: <><FontAwesomeIcon icon={faStar} className="text-yellow-400 mr-2" /> Trusted by Users</> },
     { id: 2, content: <><FontAwesomeIcon icon={faHeart} className="text-red-500 mr-2" /> Rated 4.9/5 Stars</> },
     { id: 3, content: <><FontAwesomeIcon icon={faThumbsUp} className="text-blue-500 mr-2" /> Easy to Use</> },
     { id: 4, content: <><FontAwesomeIcon icon={faCheckCircle} className="text-green-500 mr-2" /> Verified Buddies</> },
     { id: 5, content: <><FontAwesomeIcon icon={faRocket} className="text-purple-500 mr-2" /> Fast Matching</> },
     { id: 6, content: <><FontAwesomeIcon icon={faAward} className="text-yellow-500 mr-2" /> Award Winning Service</> },
-    { id: 7, content: <><FontAwesomeIcon icon={faUsers} className="text-indigo-500 mr-2" /> 500+ Active Buddies</> },
+    { id: 7, content: <><FontAwesomeIcon icon={faUsers} className="text-indigo-500 mr-2" /> 5+ Active Buddies</> },
     { id: 8, content: <><FontAwesomeIcon icon={faGlobe} className="text-teal-500 mr-2" /> Available Across India</> },
   ];
 
@@ -99,9 +99,9 @@ const Marquee = ({
 const MarqueeSection = () => {
   return (
     <section className="py-2 bg-gray-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4">
         <Marquee 
-          speed="normal" 
+          speed="slow" 
           pauseOnHover={true}
           className="border-y border-gray-200 py-1"
         />

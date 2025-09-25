@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
-import hireBuddyLogo from "../assets/hireBuddy.png";
+import hireBuddyLogo from "../assets/personJump.png";
 import { Link } from "react-router-dom";
 
 // Additional Feature Section Component
@@ -106,7 +106,7 @@ const TestimonialsSection = () => {
 // CTA Section Component
 const CTASection = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+    <section className="py-12  bg-blue-700  text-white">
       <div className="container mx-auto px-6 text-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Get Started?</h2>
         <p className="text-xl max-w-2xl mx-auto mb-10 opacity-90">Join thousands of users who are making their daily life easier with HireBuddy</p>
