@@ -4,6 +4,7 @@ import HeroSection from "./HeroSection";
 import Body from "./Body";
 import { MarqueeSection } from "./Marquee";
 import { backend_url } from "../context/HardCodedValues";
+import Footer from "./Footer";
 
 const Landing = () => {
   useEffect(() => {
@@ -22,12 +23,12 @@ const Landing = () => {
   return (
     <>
       <NavBar />
-
       <HeroSection />
       <div className="p-10 min-h-[60px] bg-gray-50 flex items-center justify-center  shadow-md">
       </div>
       <MarqueeSection />
       <Body />
+      <Footer/>
     </>
   );
 };

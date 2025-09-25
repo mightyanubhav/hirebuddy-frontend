@@ -17,12 +17,7 @@ const MessagesSection = ({
           // Debug each message
          
           const isSender = String(message.sender) === String(userId);
-       
-        //     messageSender: message.sender,
-        //     userId: userId,
-        //     isSender:
-        //       String(message.sender._id || message.sender) === String(userId),
-        //   });
+      
           return (
             <div
               key={message._id}
