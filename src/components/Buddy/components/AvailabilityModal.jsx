@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { backend_url } from "../../../../context/HardCodedValues";
+import { backend_url } from "../../../context/HardCodedValues";
 
 const AvailabilityModal = ({ profileData, onClose, user }) => {
   const [availabilityDates, setAvailabilityDates] = useState([]);

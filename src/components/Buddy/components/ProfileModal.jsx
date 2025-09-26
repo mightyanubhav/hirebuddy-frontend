@@ -1,5 +1,5 @@
 import React from "react";
-import { backend_url } from "../../../../context/HardCodedValues"
+import { backend_url } from "../../../context/HardCodedValues"
 
 const ProfileModal = ({ profileData, onProfileDataChange, onClose, user }) => {
   const updateProfile = async (e) => {

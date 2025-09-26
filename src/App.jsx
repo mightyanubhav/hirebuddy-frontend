@@ -5,7 +5,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import CustomerDashboard from "./components/Customer/CustomerDashboard";
 // import BuddyDashboard from "./components/Buddy/BuddyDashboard";
-import BuddyDashboard from "./components/Buddy/BuddyDashboard/BuddyDashboard";
+import BuddyDashboard from "./components/Buddy/BuddyDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {

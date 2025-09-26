@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import NavigationTabs from "./components/NavigationTabs";
@@ -8,7 +8,7 @@ import EarningsTab from "./components/EarningsTab";
 import ProfileTab from "./components/ProfileTab";
 import ProfileModal from "./components/ProfileModal";
 import AvailabilityModal from "./components/AvailabilityModal";
-import { backend_url } from "../../../context/HardCodedValues";
+import { backend_url } from "../../context/HardCodedValues";
 
 const BuddyDashboard = () => {
   const navigate = useNavigate();

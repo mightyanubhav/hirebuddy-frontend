@@ -1,8 +1,8 @@
 import React, { useState, useCallback } from "react";
 import MessageSection from "./MessageSection";
-import SocketMessages from "../../../Booking/SocketMessages";
-import { backend_url } from "../../../../context/HardCodedValues"
-import { useAuth } from "../../../../context/AuthContext"
+import SocketMessages from "../../Booking/SocketMessages";
+import { backend_url } from "../../../context/HardCodedValues"
+import { useAuth } from "../../../context/AuthContext"
 
 const BookingCard = ({ booking, isSelected, chatMode, onSelectBooking, onChatModeChange }) => {
   const [messages, setMessages] = useState([]);
