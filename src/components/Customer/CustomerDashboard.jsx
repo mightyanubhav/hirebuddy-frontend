@@ -54,7 +54,7 @@ const CustomerDashboard = () => {
     fetchCredits();
     if (activeTab === "buddies") fetchBuddies();
     else if (activeTab === "bookings") fetchBookings();
-  }, [activeTab]);
+  }, [activeTab, fetchBookings, fetchBuddies, fetchCredits]);
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !selectedBooking) return;
