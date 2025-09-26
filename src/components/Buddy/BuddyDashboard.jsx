@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Header from "./components/Header";
-import NavigationTabs from "./components/NavigationTabs";
-import BookingsTab from "./components/BookingsTab";
-import EarningsTab from "./components/EarningsTab";
-import ProfileTab from "./components/ProfileTab";
-import ProfileModal from "./components/ProfileModal";
-import AvailabilityModal from "./components/AvailabilityModal";
+import Header from "./buddyComponents/Header";
+import NavigationTabs from "./buddyComponents/NavigationTabs";
+import BookingsTab from "./buddyComponents/BookingsTab";
+import EarningsTab from "./buddyComponents/EarningsTab";
+import ProfileTab from "./buddyComponents/ProfileTab";
+import ProfileModal from "./buddyComponents/ProfileModal";
+import AvailabilityModal from "./buddyComponents/AvailabilityModal";
 import { backend_url } from "../../context/HardCodedValues";
 
 const BuddyDashboard = () => {
