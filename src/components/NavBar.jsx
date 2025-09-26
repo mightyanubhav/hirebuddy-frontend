@@ -73,7 +73,7 @@ const NavBar = () => {
       {/* NAVBAR */}
       <div className="flex h-17 sm:h-18 px-2 sm:px-4 bg-white shadow-md items-center relative justify-between gap-3">
         {/* LOGO */}
-        <div className="min-w-[110px] sm:min-w-[150px]  h-10 sm:h-13 border-blue-300 rounded-xl mr-2 sm:mr-3 flex items-center justify-center transition-all duration-300">
+        <div className="min-w-[110px] sm:min-w-[150px] border h-10 sm:h-13  rounded-xl mr-2 sm:mr-3 flex items-center justify-center transition-all duration-300">
           <p className="font-semibold text-sm sm:text-lg md:text-lg text-blue-700 tracking-tight">
             HireBuddy
           </p>
