@@ -2,11 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import Header from "./Header";
 import NavigationTabs from "./NavigationTabs";
 import BuddiesTab from "./BuddiesTab";
-import BookingsTab from "./BookingsTab";
-import BookingModal from "./BookingModel";
-import { useAuth } from "../context/AuthContext";
+import BookingsTab from "../Booking/BookingsTab";
+import BookingModal from "../Booking/BookingModel";
+import { useAuth } from "../../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
-import { backend_url } from "../context/HardCodedValues";
+import { backend_url } from "../../context/HardCodedValues";
 
 const CustomerDashboard = () => {
   const [activeTab, setActiveTab] = useState("buddies");

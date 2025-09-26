@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useAuth } from "../context/AuthContext";
-import SocketMessages from "../components/SocketMessages";
-import { backend_url } from "../context/HardCodedValues";
+import { useAuth } from "../../context/AuthContext";
+import SocketMessages from "../Booking/SocketMessages";
+import { backend_url } from "../../context/HardCodedValues";
 import { useNavigate } from "react-router-dom";
 
 // Buddy Dashboard Component

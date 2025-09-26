@@ -13,7 +13,7 @@ import {
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { backend_url } from "../context/HardCodedValues";
-const SignupPage = () => {
+const Signup = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1); // 1: Signup form, 2: OTP verification
   const [showPassword, setShowPassword] = useState(false);
@@ -375,4 +375,4 @@ const SignupPage = () => {
   );
 };
 
-export default SignupPage;
+export default Signup;
