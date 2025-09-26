@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useRef } from "react";
-import hireBuddyImg from "../assets/personJump.png";
+import hireBuddyImg from "../../assets/personJump.png";
 import { Link } from "react-router-dom";
 const animatedWords = [
   "Hangouts",

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import hireBuddyLogo from "../assets/personJump.png"
+import hireBuddyLogo from "../../assets/personJump.png"
 
 const Footer = () => {
   return (

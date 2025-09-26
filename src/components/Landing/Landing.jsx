@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import NavBar from "./NavBar";
+import NavBar from "../Landing/NavBar";
 import HeroSection from "./HeroSection";
-import Body from "./Body";
+import Body from "../Landing/Body";
 import { MarqueeSection } from "./Marquee";
-import { backend_url } from "../context/HardCodedValues";
+import { backend_url } from "../../context/HardCodedValues";
 import Footer from "./Footer";
 
 const Landing = () => {

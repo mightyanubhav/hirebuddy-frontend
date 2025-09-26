@@ -1,7 +1,7 @@
 // import {  useEffect } from "react";
 import axios from "axios";
-import { useAuth } from "../context/AuthContext";
-import { backend_url } from "../context/HardCodedValues";
+import { useAuth } from "../../context/AuthContext";
+import { backend_url } from "../../context/HardCodedValues";
 import { useNavigate } from "react-router-dom";
 
 const Header = ({ credits, setCredits }) => {

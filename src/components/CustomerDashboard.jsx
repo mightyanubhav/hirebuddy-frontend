@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Header from "./Header";
+import Header from "./Landing/Header";
 import NavigationTabs from "./NavigationTabs";
 import BuddiesTab from "./BuddiesTab";
 import BookingsTab from "./BookingsTab";
