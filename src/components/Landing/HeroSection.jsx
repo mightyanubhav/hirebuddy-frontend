@@ -10,6 +10,7 @@ const animatedWords = [
   "Communication",
 ];
 
+
 export default function HeroSection() {
   const [wordIndex, setWordIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
@@ -92,38 +93,7 @@ export default function HeroSection() {
         </button>
           </div>
           <div className="border-t border-gray-200 my-5"></div>
-          <div className="flex flex-col sm:flex-row gap-7 mt-6">
-            <div>
-              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                100+
-              </span>
-              <div className="text-black/80 text-base">Customers &rarr;</div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                2+
-              </span>
-              <div className="text-black/80 text-base">
-                States across India &rarr;
-              </div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                5+
-              </span>
-              <div className="text-black/80 text-base">
-                Customer join every month &rarr;
-              </div>
-            </div>
-            <div>
-              <span className="text-blue-700 font-bold text-xl xs:text-2xl">
-                #1
-              </span>
-              <div className="text-black/80 text-base" ref={bottomRef}>
-                First app of its kind &rarr;
-              </div>
-            </div>
-          </div>
+          <Stats/>
         </div>
 
         {/* Right: Always-Connected Patch and Animated Image */}
@@ -147,3 +117,48 @@ export default function HeroSection() {
     </section>
   );
 }
+
+
+const Stats = () => {
+  const statsData = [
+    { label: "Customers", value: 500 },
+    { label: "States across India", value: 28 },
+    { label: "Customers join every month", value: 50 },
+    { label: "First app of its kind", value: 1 },
+  ];
+
+  const [counts, setCounts] = useState(statsData.map(() => 0));
+  const duration = 2000; // 2 seconds total animation
+
+  useEffect(() => {
+    const startTime = Date.now();
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      setCounts(
+        statsData.map((stat) => Math.ceil(stat.value * progress))
+      );
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  }, []);
+
+  return (
+    <div className="flex flex-col sm:flex-row gap-7 mt-6">
+      {statsData.map((stat, i) => (
+        <div key={i}>
+          <span className="text-blue-700 font-bold text-xl xs:text-2xl">
+            {counts[i]}{i === 3 ? "" : "+"}
+          </span>
+          <div className="text-black/80 text-base">{stat.label} &rarr;</div>
+        </div>
+      ))}
+    </div>
+  );
+};
