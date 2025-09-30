@@ -7,6 +7,7 @@ import CustomerDashboard from "./components/Customer/CustomerDashboard";
 // import BuddyDashboard from "./components/Buddy/BuddyDashboard";
 import BuddyDashboard from "./components/Buddy/BuddyDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import BuddyHireService from "./components/BuddyHireService";
 
 function App() {
   return (
@@ -17,7 +18,7 @@ function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
-
+            <Route path="/services" element={<BuddyHireService/>}/>
             {/* Protected Routes */}
             <Route
               path="/customer"

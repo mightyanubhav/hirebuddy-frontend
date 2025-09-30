@@ -109,23 +109,28 @@ const Signup = () => {
           {/* Left side - Illustration and info */}
           <div className="md:w-1/2 bg-gradient-to-b from-blue-600 to-indigo-700 text-white p-10 hidden md:flex flex-col justify-center">
             <div className="mb-8">
-              <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
+              <h2 className="text-3xl font-bold mb-4">
+                Join the HireBuddy Network
+              </h2>
               <p className="opacity-90">
-                Create an account to access exclusive features and content.
+                Sign up to connect with trusted local buddies and unlock a
+                seamless experience for tours, assistance, shopping, and more.
               </p>
             </div>
             <div className="space-y-4">
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>Secure authentication with OTP</span>
+                <span>Verified and reliable buddies for every service</span>
               </div>
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>Multiple OAuth provider options</span>
+                <span>Secure sign-up with OTP and role-based access</span>
               </div>
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>Role-based access control</span>
+                <span>
+                  Flexible booking options for hourly or full-day services
+                </span>
               </div>
             </div>
           </div>
@@ -234,19 +239,35 @@ const Signup = () => {
                     </button>
                   </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {/* Role selection as radio buttons */}
+                  <div className="space-y-2">
+                    <span className="block text-sm font-medium text-gray-700 mb-1">
                       Role
-                    </label>
-                    <select
-                      name="role"
-                      value={formData.role}
-                      onChange={handleInputChange}
-                      className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    >
-                      <option value="buddy">Buddy</option>
-                      <option value="customer">Customer</option>
-                    </select>
+                    </span>
+                    <div className="flex space-x-6">
+                      <label className="inline-flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="role"
+                          value="customer"
+                          checked={formData.role === "customer"}
+                          onChange={handleInputChange}
+                          className="form-radio text-blue-600"
+                        />
+                        <span>Customer</span>
+                      </label>
+                      <label className="inline-flex items-center space-x-2">
+                        <input
+                          type="radio"
+                          name="role"
+                          value="buddy"
+                          checked={formData.role === "buddy"}
+                          onChange={handleInputChange}
+                          className="form-radio text-blue-600"
+                        />
+                        <span>Buddy</span>
+                      </label>
+                    </div>
                   </div>
                 </div>
 

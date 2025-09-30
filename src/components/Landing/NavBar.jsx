@@ -13,7 +13,6 @@ import {
   SearchOverlay,
   LanguageDropdown,
 } from "./ImportantNavBarFunctions";
-
 // ========== MAIN NAVBAR ==========
 const NavBar = () => {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
@@ -55,8 +54,8 @@ const NavBar = () => {
     <div className="flex flex-col box-border w-full fixed top-0 left-0 z-50">
       <div className="flex h-17 sm:h-18 px-2 sm:px-4 bg-white shadow-md items-center relative justify-between gap-3">
         {/* LOGO */}
-        <div className="min-w-[110px] sm:min-w-[150px] border h-10 sm:h-13 rounded-xl mr-2 sm:mr-3 flex items-center justify-center transition-all duration-300">
-          <p className="font-semibold text-sm sm:text-lg md:text-lg text-blue-700 tracking-tight">
+        <div className="min-w-[110px] sm:min-w-[150px]  h-10 sm:h-13 rounded-xl mr-2 sm:mr-3 flex items-center justify-center transition-all duration-300">
+          <p className="font-semibold text-lg text-blue-700 tracking-tight">
             HireBuddy
           </p>
         </div>
@@ -222,10 +221,7 @@ const DesktopNavBar = ({ setSearchOpen }) => {
   return (
     <div className="w-full flex">
       <div className="w-3/6 flex flex-row items-center gap-14 font-normal">
-        <Dropdown
-          label="Services"
-          items={["Tour Guides", "Hand Help", "Accommodation", "Chatting"]}
-        />
+        <Link to={'/services'}>Services</Link>
         <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
         <Dropdown label="Company" items={["About Us", "Careers", "Contact"]} />
       </div>
