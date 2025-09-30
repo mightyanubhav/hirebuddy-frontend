@@ -132,11 +132,14 @@ const MobileNavBar = ({ dropItems }) => {
           </div>
 
           {/* Menu */}
+          {/* Menu */}
           <div className="flex flex-col gap-4 px-2 text-sm font-medium">
-            <Dropdown
-              label="Services"
-              items={["Tour Guides", "Hand Help", "Accommodation", "Chatting"]}
-            />
+            <Link
+              to="/services"
+              className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
+            >
+              Services
+            </Link>
             <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
             <Dropdown
               label="Company"
@@ -178,10 +181,12 @@ const TabletNavBar = ({ dropItems }) => {
   return (
     <>
       <div className="flex items-center gap-8">
-        <Dropdown
-          label="Services"
-          items={["Tour Guides", "Hand Help", "Accommodation", "Chatting"]}
-        />
+        <Link
+          to="/services"
+          className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
+        >
+          Services
+        </Link>
         <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
         <Dropdown label="Company" items={["About Us", "Careers", "Contact"]} />
 
@@ -221,10 +226,16 @@ const DesktopNavBar = ({ setSearchOpen }) => {
   return (
     <div className="w-full flex">
       <div className="w-3/6 flex flex-row items-center gap-14 font-normal">
-        <Link to={'/services'}>Services</Link>
+        <Link
+          to="/services"
+          className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
+        >
+          Services
+        </Link>
         <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
         <Dropdown label="Company" items={["About Us", "Careers", "Contact"]} />
       </div>
+
       <div className="w-2/6 flex flex-row items-center justify-end gap-6">
         <button
           className="cursor-pointer hover:text-blue-700 transition"
