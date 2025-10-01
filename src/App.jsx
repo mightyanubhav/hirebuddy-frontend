@@ -13,6 +13,7 @@ import AboutUs from "./components/AboutUs";
 import HowToOperate from "./components/HowToOperate";
 import BuddyVerification from "./components/BuddyVerification";
 import WhyUs from "./components/WhyUs";
+import Careers from "./components/Careers";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/guides" element={<HowToOperate/>} />
             <Route path="/about-buddies" element={<BuddyVerification/>} />
             <Route path="/why-us" element={<WhyUs/>} />
+            <Route path="/careers" element={<Careers/>} />
             {/* Protected Routes */}
             <Route
               path="/customer"

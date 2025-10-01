@@ -114,7 +114,7 @@ const BuddyVerification = () => {
   ];
 
   const verificationStats = [
-    { number: '2,50,000+', label: 'Buddies Verified' },
+    { number: '25 +', label: 'Buddies Verified' },
     { number: '99.7%', label: 'Verification Success Rate' },
     { number: '4.8/5', label: 'Customer Safety Rating' },
     { number: '48h', label: 'Average Verification Time' }
@@ -145,7 +145,7 @@ const BuddyVerification = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             {verificationStats.map((stat, index) => (
               <div key={index}>
-                <div className="text-3xl font-bold mb-2">{stat.number}</div>
+                <div className="text-2xl font-bold mb-2">{stat.number}</div>
                 <div className="text-blue-100 text-sm">{stat.label}</div>
               </div>
             ))}
@@ -305,12 +305,12 @@ const BuddyVerification = () => {
 
         {/* Trust Badges */}
         <section className="px-6 py-12 bg-white border-t border-gray-200">
-          <h2 className="text-2xl font-bold text-black text-center mb-8">Trusted By</h2>
+          <h2 className="text-xl font-bold text-black text-center mb-8">Trusted By</h2>
           <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-60">
-            <div className="text-2xl font-bold text-gray-700">🔒 ISO 27001 Certified</div>
-            <div className="text-2xl font-bold text-gray-700">🛡️ GDPR Compliant</div>
-            <div className="text-2xl font-bold text-gray-700">✅ MeitY Approved</div>
-            <div className="text-2xl font-bold text-gray-700">📜 FAME India Certified</div>
+            <div className="text-xl font-bold text-gray-700">🔒 ISO 27001 Certified</div>
+            <div className="text-xl font-bold text-gray-700">🛡️ GDPR Compliant</div>
+            <div className="text-xl font-bold text-gray-700">✅ MeitY Approved</div>
+            <div className="text-xl font-bold text-gray-700">📜 FAME India Certified</div>
           </div>
         </section>
 

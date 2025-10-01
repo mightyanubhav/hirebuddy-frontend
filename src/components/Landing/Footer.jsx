@@ -41,10 +41,10 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-base mb-2">Product</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="" className="text-gray-400 hover:text-white">Features</Link></li>
-              <li><Link to="" className="text-gray-400 hover:text-white">Pricing</Link></li>
-              <li><Link to="" className="text-gray-400 hover:text-white">Case Studies</Link></li>
-              <li><Link to="" className="text-gray-400 hover:text-white">Reviews</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-white">Features</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-white">Pricing</Link></li>
+              <li><Link to="/services" className="text-gray-400 hover:text-white">Case Studies</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-white">Reviews</Link></li>
             </ul>
           </div>
 
@@ -52,9 +52,9 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-base mb-2">Company</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="" className="text-gray-400 hover:text-white">About</Link></li>
-              <li><Link to="" className="text-gray-400 hover:text-white">Careers</Link></li>
-              <li><Link to="" className="text-gray-400 hover:text-white">Contact</Link></li>
+              <li><Link to="/about" className="text-gray-400 hover:text-white">About</Link></li>
+              <li><Link to="/careers" className="text-gray-400 hover:text-white">Careers</Link></li>
+              <li><Link to="contact" className="text-gray-400 hover:text-white">Contact</Link></li>
               <li><Link to="" className="text-gray-400 hover:text-white">Partners</Link></li>
             </ul>
           </div>
@@ -63,7 +63,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold text-base mb-2">Help</h3>
             <ul className="space-y-2 text-sm">
-              <li><Link to="" className="text-gray-400 hover:text-white">Support</Link></li>
+              <li><Link to="/support" className="text-gray-400 hover:text-white">Support</Link></li>
               <li><Link to="" className="text-gray-400 hover:text-white">FAQ</Link></li>
               <li><Link to="" className="text-gray-400 hover:text-white">Privacy Policy</Link></li>
               <li><Link to="" className="text-gray-400 hover:text-white">Terms of Service</Link></li>
