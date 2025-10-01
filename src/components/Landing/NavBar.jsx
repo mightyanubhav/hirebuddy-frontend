@@ -37,9 +37,12 @@ const NavBar = () => {
 
       <LanguageDropdown />
 
-      <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">
+      <Link
+        to={"/support"}
+        className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
+      >
         Support
-      </div>
+      </Link>
 
       <Link
         to="/login"
@@ -140,11 +143,23 @@ const MobileNavBar = ({ dropItems }) => {
             >
               Services
             </Link>
-            <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
             <Dropdown
-              label="Company"
-              items={["About Us", "Careers", "Contact"]}
-            />
+  label="Resources"
+  items={[
+    { label: "User Guides", path: "/guides" },
+    { label: "About Buddies", path: "/about-buddies" },
+    { label: "Why Us", path: "/why-us" }
+  ]}
+/>
+
+            <Dropdown
+          label="Company"
+          items={[
+            { label: "About Us", path: "/about" },
+            { label: "Careers", path: "/careers" },
+            { label: "Contact", path: "/contact" },
+          ]}
+        />
 
             {/* DropItems directly */}
             <div className="flex flex-col gap-3 px-1">{dropItems}</div>
@@ -186,9 +201,26 @@ const TabletNavBar = ({ dropItems }) => {
           className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
         >
           Services
+          
         </Link>
-        <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
-        <Dropdown label="Company" items={["About Us", "Careers", "Contact"]} />
+        <Dropdown
+  label="Resources"
+  items={[
+    { label: "User Guides", path: "/guides" },
+    { label: "About Buddies", path: "/about-buddies" },
+    { label: "Why Us", path: "/why-us" }
+  ]}
+/>
+
+
+        <Dropdown
+          label="Company"
+          items={[
+            { label: "About Us", path: "/about" },
+            { label: "Careers", path: "/careers" },
+            { label: "Contact", path: "/contact" },
+          ]}
+        />
 
         {/* Dropdown for hidden items */}
         <div className="relative">
@@ -232,8 +264,23 @@ const DesktopNavBar = ({ setSearchOpen }) => {
         >
           Services
         </Link>
-        <Dropdown label="Resources" items={["Docs", "Guides", "API"]} />
-        <Dropdown label="Company" items={["About Us", "Careers", "Contact"]} />
+        <Dropdown
+  label="Resources"
+  items={[
+    { label: "User Guides", path: "/guides" },
+    { label: "About Buddies", path: "/about-buddies" },
+    { label: "Why Us", path: "/why-us" }
+  ]}
+/>
+
+        <Dropdown
+          label="Company"
+          items={[
+            { label: "About Us", path: "/about" },
+            { label: "Careers", path: "/careers" },
+            { label: "Contact", path: "/contact" },
+          ]}
+        />
       </div>
 
       <div className="w-2/6 flex flex-row items-center justify-end gap-6">
@@ -241,12 +288,15 @@ const DesktopNavBar = ({ setSearchOpen }) => {
           className="cursor-pointer hover:text-blue-700 transition"
           onClick={() => setSearchOpen(true)}
         >
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+          {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
         </button>
         <LanguageDropdown />
-        <div className="cursor-pointer hover:text-blue-700 transition-colors duration-200">
+        <Link
+          to={"/support"}
+          className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
+        >
           Support
-        </div>
+        </Link>
         <Link
           to="/login"
           className="cursor-pointer hover:text-blue-700 transition-colors duration-200"

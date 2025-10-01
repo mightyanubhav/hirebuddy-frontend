@@ -6,6 +6,8 @@ import {
 import { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { Link } from "react-router-dom";
+
 const Dropdown = ({ label, items }) => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -16,11 +18,13 @@ const Dropdown = ({ label, items }) => {
         setOpen(false);
       }
     };
+
     if (open) {
       document.addEventListener("mousedown", handleClickOutside);
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -33,8 +37,8 @@ const Dropdown = ({ label, items }) => {
         onClick={() => setOpen(!open)}
         className={`flex items-center gap-1 px-4 py-2 rounded-md font-medium transition-colors duration-200 
           ${open 
-            ? " text-blue-700" 
-            : " text-white-700 hover:text-blue-700 hover:cursor-pointer"} 
+            ? "text-blue-700" 
+            : "text-gray-700 hover:text-blue-700 hover:cursor-pointer"} 
         `}
       >
         {label}
@@ -53,13 +57,16 @@ const Dropdown = ({ label, items }) => {
         >
           <ul className="py-2">
             {items.map((item, idx) => (
-              <li
-                key={idx}
-                className="px-4 py-2 text-sm text-black 
-                hover:bg-blue-600 hover:text-white 
-                hover:pl-5 transition-all duration-200 cursor-pointer rounded-md"
-              >
-                {item}
+              <li key={idx}>
+                <Link
+                  to={item.path}
+                  onClick={() => setOpen(false)}
+                  className="block px-4 py-2 text-sm text-black 
+                  hover:bg-blue-600 hover:text-white 
+                  hover:pl-5 transition-all duration-200 rounded-md"
+                >
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>

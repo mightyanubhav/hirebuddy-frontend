@@ -4,10 +4,15 @@ import Landing from "./components/Landing/Landing";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import CustomerDashboard from "./components/Customer/CustomerDashboard";
-// import BuddyDashboard from "./components/Buddy/BuddyDashboard";
 import BuddyDashboard from "./components/Buddy/BuddyDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import BuddyHireService from "./components/BuddyHireService";
+import SupportPage from "./components/SupportPage";
+import ContactUs from "./components/ContactUs";
+import AboutUs from "./components/AboutUs";
+import HowToOperate from "./components/HowToOperate";
+import BuddyVerification from "./components/BuddyVerification";
+import WhyUs from "./components/WhyUs";
 
 function App() {
   return (
@@ -19,6 +24,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/login" element={<Login />} />
             <Route path="/services" element={<BuddyHireService/>}/>
+            <Route path="/support" element={<SupportPage/>}/>
+            <Route path="/contact" element={<ContactUs/>} />
+            <Route path="/about" element={<AboutUs/>} />
+            <Route path="/guides" element={<HowToOperate/>} />
+            <Route path="/about-buddies" element={<BuddyVerification/>} />
+            <Route path="/why-us" element={<WhyUs/>} />
             {/* Protected Routes */}
             <Route
               path="/customer"
