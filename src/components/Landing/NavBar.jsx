@@ -35,7 +35,7 @@ const NavBar = () => {
         {/* <span className="ml-2">Search</span> */}
       </div>
 
-      <LanguageDropdown />
+      {/* <LanguageDropdown /> */}
 
       <Link
         to={"/support"}
@@ -288,7 +288,7 @@ const DesktopNavBar = ({ setSearchOpen }) => {
         >
           {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
         </button>
-        <LanguageDropdown />
+        {/* <LanguageDropdown /> */}
         <Link
           to={"/support"}
           className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
