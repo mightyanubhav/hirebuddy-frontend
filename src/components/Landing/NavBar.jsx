@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
-  faMagnifyingGlass,
+  // faMagnifyingGlass,
   faBars,
   faXmark,
   faEllipsis,
@@ -31,8 +31,8 @@ const NavBar = () => {
         className="flex items-center cursor-pointer hover:text-blue-700 transition-colors duration-200"
         onClick={() => setSearchOpen(true)}
       >
-        <FontAwesomeIcon icon={faMagnifyingGlass} />
-        <span className="ml-2">Search</span>
+        {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+        {/* <span className="ml-2">Search</span> */}
       </div>
 
       <LanguageDropdown />
@@ -134,7 +134,7 @@ const MobileNavBar = ({ dropItems }) => {
             </button>
           </div>
 
-          {/* Menu */}
+        
           {/* Menu */}
           <div className="flex flex-col gap-4 px-2 text-sm font-medium">
             <Link
@@ -144,22 +144,22 @@ const MobileNavBar = ({ dropItems }) => {
               Services
             </Link>
             <Dropdown
-  label="Resources"
-  items={[
-    { label: "User Guides", path: "/guides" },
-    { label: "About Buddies", path: "/about-buddies" },
-    { label: "Why Us", path: "/why-us" }
-  ]}
-/>
+              label="Resources"
+              items={[
+                { label: "User Guides", path: "/guides" },
+                { label: "About Buddies", path: "/about-buddies" },
+                { label: "Why Us", path: "/why-us" },
+              ]}
+            />
 
             <Dropdown
-          label="Company"
-          items={[
-            { label: "About Us", path: "/about" },
-            { label: "Careers", path: "/careers" },
-            { label: "Contact", path: "/contact" },
-          ]}
-        />
+              label="Company"
+              items={[
+                { label: "About Us", path: "/about" },
+                { label: "Careers", path: "/careers" },
+                { label: "Contact", path: "/contact" },
+              ]}
+            />
 
             {/* DropItems directly */}
             <div className="flex flex-col gap-3 px-1">{dropItems}</div>
@@ -201,17 +201,15 @@ const TabletNavBar = ({ dropItems }) => {
           className="cursor-pointer hover:text-blue-700 transition-colors duration-200"
         >
           Services
-          
         </Link>
         <Dropdown
-  label="Resources"
-  items={[
-    { label: "User Guides", path: "/guides" },
-    { label: "About Buddies", path: "/about-buddies" },
-    { label: "Why Us", path: "/why-us" }
-  ]}
-/>
-
+          label="Resources"
+          items={[
+            { label: "User Guides", path: "/guides" },
+            { label: "About Buddies", path: "/about-buddies" },
+            { label: "Why Us", path: "/why-us" },
+          ]}
+        />
 
         <Dropdown
           label="Company"
@@ -265,13 +263,13 @@ const DesktopNavBar = ({ setSearchOpen }) => {
           Services
         </Link>
         <Dropdown
-  label="Resources"
-  items={[
-    { label: "User Guides", path: "/guides" },
-    { label: "About Buddies", path: "/about-buddies" },
-    { label: "Why Us", path: "/why-us" }
-  ]}
-/>
+          label="Resources"
+          items={[
+            { label: "User Guides", path: "/guides" },
+            { label: "About Buddies", path: "/about-buddies" },
+            { label: "Why Us", path: "/why-us" },
+          ]}
+        />
 
         <Dropdown
           label="Company"
