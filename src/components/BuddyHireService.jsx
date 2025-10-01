@@ -67,7 +67,7 @@ const BuddyHireService = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-gray-900 font-sans">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* HEADER */}
       <header className="fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-200 shadow z-50">
         <nav className="container mx-auto px-4 py-3 flex justify-between items-center">

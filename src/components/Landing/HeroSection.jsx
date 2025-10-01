@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState } from "react";
 import hireBuddyImg from "../../assets/personJump.png";
 import { Link } from "react-router-dom";
 const animatedWords = [
@@ -16,11 +16,6 @@ export default function HeroSection() {
   const [displayedText, setDisplayedText] = useState("");
   const [typing, setTyping] = useState(true);
 
-  const bottomRef = useRef(null);
-
-  const scrollToBottom = () => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
   // Typewriter effect
   useEffect(() => {
     let typingTimeout;
@@ -84,13 +79,13 @@ export default function HeroSection() {
             >
               Get Started
             </Link>
-            <button
+            <Link
           className="flex items-center text-blue-700 font-semibold hover:text-blue-800 text-lg"
-          onClick={scrollToBottom}
+          to={'/services'}
         >
           Learn more
           <span className="ml-2 text-2xl">&#8594;</span>
-        </button>
+        </Link>
           </div>
           <div className="border-t border-gray-200 my-5"></div>
           <Stats/>
