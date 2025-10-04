@@ -75,7 +75,7 @@ const Signup = () => {
       const data = await response.json();
       if (response.ok) {
         setStep(2);
-        setMessage("OTP sent successfully. Please check your phone.");
+        setMessage("Check SPAM Folder in gmail for OTP.");
       } else {
         setMessage(data.error || "Failed to sign up");
       }
