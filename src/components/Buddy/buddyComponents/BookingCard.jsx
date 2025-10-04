@@ -1,6 +1,3 @@
-import React, { useState, useCallback } from "react";
-import MessageSection from "./MessageSection";
-import SocketMessages from "../../Booking/SocketMessages";
 import { backend_url } from "../../../context/HardCodedValues";
 import { useAuth } from "../../../context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,13 +12,10 @@ import {
   faClock,
   faCircle,
   faEnvelope,
-  faXmark
 } from "@fortawesome/free-solid-svg-icons";
 
-const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) => {
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
-  const [showChat, setShowChat] = useState(false);
+const BookingCard = ({ booking, onOpenChatTab }) => {
+
   const { user } = useAuth();
 
   const updateBookingStatus = async (status) => {
@@ -41,44 +35,12 @@ const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) =
     }
   };
 
-  const fetchMessages = useCallback(async () => {
-    try {
-      const token = user?.token;
-      const response = await fetch(
-        `${backend_url}/buddy/messages?bookingId=${booking._id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setMessages(data.messages);
-        onSelectBooking(booking._id);
-        setShowChat(true);
-      }
-    } catch (error) { console.error(error); }
-  }, [booking._id, user?.token, onSelectBooking]);
 
-  const sendMessage = async () => {
-    if (!newMessage.trim()) return;
-    try {
-      const token = user?.token;
-      await fetch(`${backend_url}/buddy/messages`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ bookingId: booking._id, text: newMessage }),
-      });
-      setNewMessage("");
-      fetchMessages();
-    } catch (error) { console.error(error); }
-  };
 
-  const getUserId = () => {
-    const token = user?.token;
-    if (!token) return null;
-    try { return JSON.parse(atob(token.split(".")[1])).id; }
-    catch { return null; }
-  };
 
-  const userId = getUserId();
+
+
+
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -111,7 +73,7 @@ const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) =
           )}
 
           <button
-            onClick={() => { fetchMessages(); onChatModeChange("history"); setShowChat(true); }}
+            onClick={() => { onOpenChatTab(booking._id, "history"); }}
             className="p-1.5 bg-white border border-gray-300 hover:bg-blue-50 hover:border-blue-300 text-gray-600 hover:text-blue-600 rounded-md transition"
             title="Message History"
           >
@@ -119,7 +81,7 @@ const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) =
           </button>
 
           <button
-            onClick={() => { onSelectBooking(booking._id); onChatModeChange("live"); setShowChat(true); }}
+            onClick={() => { onOpenChatTab(booking._id, "live"); }}
             className="p-1.5 bg-white border border-gray-300 hover:bg-purple-50 hover:border-purple-300 text-gray-600 hover:text-purple-600 rounded-md transition"
             title="Live Chat"
           >
@@ -129,21 +91,20 @@ const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) =
       </div>
 
       {/* Customer Info */}
-<div className="bg-blue-50 border border-blue-200 rounded-xl p-3 m-3">
-  <div className="flex items-center gap-3">
-    <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-      <FontAwesomeIcon icon={faUser} className="text-white text-sm" />
-    </div>
-    <div className="flex-1 min-w-0">
-      <h3 className="font-semibold text-gray-900 truncate">{booking.customer?.name || "Customer"}</h3>
-      <div className="flex items-center gap-1 text-gray-600 mt-1">
-        <FontAwesomeIcon icon={faEnvelope} className="text-gray-400 text-xs flex-shrink-0" />
-        <span className="text-xs truncate block">{booking.customer?.email || "No email"}</span>
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 m-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+            <FontAwesomeIcon icon={faUser} className="text-white text-sm" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-gray-900 truncate">{booking.customer?.name || "Customer"}</h3>
+            <div className="flex items-center gap-1 text-gray-600 mt-1">
+              <FontAwesomeIcon icon={faEnvelope} className="text-gray-400 text-xs flex-shrink-0" />
+              <span className="text-xs truncate block">{booking.customer?.email || "No email"}</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-
 
       {/* Details */}
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-3 m-3">
@@ -188,28 +149,6 @@ const BookingCard = ({ booking, chatMode, onSelectBooking, onChatModeChange }) =
               <FontAwesomeIcon icon={faCheck} /> Mark as Completed
             </button>
           )}
-        </div>
-      )}
-
-      {/* Chat */}
-      {showChat && (
-        <div className="border-t border-gray-200 bg-white rounded-b-xl">
-          <div className="bg-gray-100 px-3 py-2 border-b border-gray-200 flex items-center justify-between">
-            <h4 className="font-semibold text-gray-900 text-sm">
-              {chatMode === "history" ? "💬 Message History" : "🔴 Live Chat"}
-            </h4>
-            <button onClick={() => setShowChat(false)} className="p-1 text-gray-400 hover:text-gray-600">
-              <FontAwesomeIcon icon={faXmark} className="text-sm" />
-            </button>
-          </div>
-          <div className="max-h-60 overflow-y-auto">
-            {chatMode === "history" && (
-              <MessageSection messages={messages} newMessage={newMessage} onNewMessageChange={setNewMessage} onSendMessage={sendMessage} userId={userId} />
-            )}
-            {chatMode === "live" && (
-              <div className="p-3"><SocketMessages bookingId={booking._id} userId={userId} /></div>
-            )}
-          </div>
         </div>
       )}
     </div>
