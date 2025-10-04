@@ -8,8 +8,6 @@ import {
   faSearch,
   faSort,
   faXmark,
-  faComment,
-  faCommentDots,
 } from "@fortawesome/free-solid-svg-icons";
 
 const BookingsTab = ({ bookings, loading, onFetchBookings }) => {
@@ -126,39 +124,7 @@ const BookingsTab = ({ bookings, loading, onFetchBookings }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Chat Tab Header - When a chat is active */}
-      {activeChatTab && currentBooking && (
-        <div className="sticky top-0 z-30 bg-white border-b border-gray-200 shadow-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between py-3">
-              <div className="flex items-center gap-3">
-                <FontAwesomeIcon 
-                  icon={activeChatTab === "history" ? faComment : faCommentDots} 
-                  className={activeChatTab === "history" ? "text-blue-600" : "text-purple-600"}
-                />
-                <div>
-                  <h3 className="font-semibold text-gray-900">
-                    {activeChatTab === "history" ? "Message History" : "Live Chat"} 
-                    <span className="text-gray-500 font-normal ml-2">
-                      • Booking #{currentBooking._id?.slice(-6)}
-                    </span>
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    with {currentBooking.customer?.name || "Customer"}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={handleCloseChatTab}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-                title="Close Chat"
-              >
-                <FontAwesomeIcon icon={faXmark} className="text-gray-500" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+  
 
       {/* Main Content with conditional layout */}
       <div className={`${activeChatTab ? 'hidden' : 'block'}`}>
