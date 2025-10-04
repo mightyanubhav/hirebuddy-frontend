@@ -29,29 +29,32 @@ const BuddyDashboard = () => {
 
   const { user } = useAuth();
 
-  // Fetch functions
-  const fetchBookings = useCallback(async (status = "") => {
-    setLoading(true);
-    try {
-      const token = user?.token;
-      const url = status
-        ? `${backend_url}/buddy/bookings?status=${status}`
-        : `${backend_url}/buddy/bookings`;
+  // ===== Fetch Functions =====
+  const fetchBookings = useCallback(
+    async (status = "") => {
+      setLoading(true);
+      try {
+        const token = user?.token;
+        const url = status
+          ? `${backend_url}/buddy/bookings?status=${status}`
+          : `${backend_url}/buddy/bookings`;
 
-      const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+        const response = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        setBookings(data.bookings);
+        if (response.ok) {
+          const data = await response.json();
+          setBookings(data.bookings);
+        }
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching bookings:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, [user?.token]);
+    },
+    [user?.token]
+  );
 
   const fetchEarnings = useCallback(async () => {
     try {
@@ -85,54 +88,80 @@ const BuddyDashboard = () => {
     }
   }, [user?.token]);
 
+  // ===== Handle Tab Data Fetch =====
   useEffect(() => {
     if (activeTab === "bookings") fetchBookings();
     else if (activeTab === "earnings") fetchEarnings();
     else if (activeTab === "profile") fetchProfile();
   }, [activeTab, fetchBookings, fetchEarnings, fetchProfile]);
 
+  // ====== Main UI ======
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header 
-        onProfileClick={() => setShowProfileModal(true)}
-        onAvailabilityClick={() => setShowAvailabilityModal(true)}
-        onLogout={() => {
-          localStorage.removeItem("token");
-          navigate("/login");
-        }}
-      />
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <NavigationTabs activeTab={activeTab} onTabChange={setActiveTab} />
-        
-        {activeTab === "bookings" && (
-          <BookingsTab 
-            bookings={bookings}
-            loading={loading}
-            onFetchBookings={fetchBookings}
-          />
-        )}
-        
-        {activeTab === "earnings" && <EarningsTab earnings={earnings} />}
-        
-        {activeTab === "profile" && <ProfileTab profileData={profileData} />}
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 bg-white shadow-sm">
+        <Header
+          onProfileClick={() => setShowProfileModal(true)}
+          onAvailabilityClick={() => setShowAvailabilityModal(true)}
+          onLogout={() => {
+            localStorage.removeItem("token");
+            navigate("/login");
+          }}
+        />
       </div>
 
+      {/* Tabs Navigation - Sticky on mobile */}
+      <div className="sticky top-[64px] z-40 bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+          <NavigationTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            className="overflow-x-auto flex justify-between sm:justify-center scrollbar-hide"
+          />
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-y-auto px-3 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-7xl mx-auto">
+          {activeTab === "bookings" && (
+            <BookingsTab
+              bookings={bookings}
+              loading={loading}
+              onFetchBookings={fetchBookings}
+            />
+          )}
+
+          {activeTab === "earnings" && <EarningsTab earnings={earnings} />}
+
+          {activeTab === "profile" && <ProfileTab profileData={profileData} />}
+        </div>
+      </div>
+
+      {/* ====== Modals ====== */}
       {showProfileModal && (
-        <ProfileModal
-          profileData={profileData}
-          onProfileDataChange={setProfileData}
-          onClose={() => setShowProfileModal(false)}
-          user={user}
-        />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-[90%] max-w-md bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+            <ProfileModal
+              profileData={profileData}
+              onProfileDataChange={setProfileData}
+              onClose={() => setShowProfileModal(false)}
+              user={user}
+            />
+          </div>
+        </div>
       )}
 
       {showAvailabilityModal && (
-        <AvailabilityModal
-          profileData={profileData}
-          onClose={() => setShowAvailabilityModal(false)}
-          user={user}
-        />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="w-[90%] max-w-md bg-white rounded-2xl shadow-lg p-4 sm:p-6">
+            <AvailabilityModal
+              profileData={profileData}
+              onClose={() => setShowAvailabilityModal(false)}
+              user={user}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

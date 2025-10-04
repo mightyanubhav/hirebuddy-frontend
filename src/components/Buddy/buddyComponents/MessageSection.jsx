@@ -2,37 +2,32 @@ import React from "react";
 
 const MessageSection = ({ messages, newMessage, onNewMessageChange, onSendMessage, userId }) => {
   return (
-    <div className="mt-6 border-t pt-4">
-      <h4 className="font-medium mb-4">Messages</h4>
-      <div className="space-y-4 max-h-60 overflow-y-auto p-2">
-        {messages.map((message) => (
+    <div className="p-3">
+      <div className="space-y-2 max-h-40 overflow-y-auto">
+        {messages.map((msg) => (
           <div
-            key={message._id}
-            className={`p-3 rounded-lg ${
-              message.sender === userId ? "bg-blue-100 ml-8" : "bg-gray-100 mr-8"
-            }`}
+            key={msg._id}
+            className={`p-2 rounded-md text-sm ${msg.sender === userId ? "bg-blue-100 ml-6" : "bg-gray-100 mr-6"}`}
           >
-            <p>{message.text}</p>
-            <p className="text-xs text-gray-500 mt-1">
-              {new Date(message.createdAt).toLocaleString()}
-            </p>
+            <p>{msg.text}</p>
+            <p className="text-xs text-gray-400 mt-1">{new Date(msg.createdAt).toLocaleTimeString()}</p>
           </div>
         ))}
       </div>
-      <div className="mt-4 flex">
+
+      {/* Input */}
+      <div className="flex mt-2">
         <input
           type="text"
           value={newMessage}
           onChange={(e) => onNewMessageChange(e.target.value)}
-          className="flex-1 border border-gray-300 rounded-l-md py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Type your message..."
-          onKeyPress={(e) => {
-            if (e.key === "Enter") onSendMessage();
-          }}
+          placeholder="Type message..."
+          onKeyPress={(e) => { if (e.key === "Enter") onSendMessage(); }}
+          className="flex-1 border border-gray-300 rounded-l-md py-1.5 px-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
         <button
           onClick={onSendMessage}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-r-md"
+          className="bg-blue-600 hover:bg-blue-700 text-white py-1.5 px-3 rounded-r-md text-sm"
         >
           Send
         </button>

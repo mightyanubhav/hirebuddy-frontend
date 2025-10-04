@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./context/AuthContext";
+import AuthProvider from "./context/AuthProvider"; // ✅ default export
 import Landing from "./components/Landing/Landing";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
@@ -36,7 +36,7 @@ function App() {
             <Route
               path="/customer"
               element={
-                <ProtectedRoute allowedRole="customer">
+                <ProtectedRoute allowedRoles={["customer"]}>
                   <CustomerDashboard />
                 </ProtectedRoute>
               }
@@ -44,12 +44,14 @@ function App() {
             <Route
               path="/buddy"
               element={
-                <ProtectedRoute allowedRole="buddy">
+                <ProtectedRoute allowedRoles={["buddy"]}>
                   <BuddyDashboard />
                 </ProtectedRoute>
               }
             />
+            <Route path="*" element={<Login />} />
           </Routes>
+          
         </div>
       </Router>
     </AuthProvider>

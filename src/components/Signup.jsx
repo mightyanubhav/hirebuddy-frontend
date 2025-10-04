@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   FaGoogle,
   FaFacebook,
@@ -11,11 +11,11 @@ import {
   FaLock,
   FaCheckCircle,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import { backend_url } from "../context/HardCodedValues";
+
 const Signup = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1: Signup form, 2: OTP verification
+  const [step, setStep] = useState(1);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -27,6 +27,33 @@ const Signup = () => {
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
+
+  // ✅ Validation rules
+  const validate = () => {
+    let newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Enter a valid email";
+    }
+
+    const phoneRegex = /^\+?[1-9]\d{9,14}$/; // allows E.164 or plain numbers
+    if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Enter a valid phone number";
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(formData.password)) {
+      newErrors.password =
+        "Password must be 8+ chars, include uppercase, lowercase, number & special char";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,20 +62,17 @@ const Signup = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (!validate()) return;
 
+    setLoading(true);
     try {
-      console.log(formData);
       const response = await fetch(`${backend_url}/user/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
-
       if (response.ok) {
         setStep(2);
         setMessage("OTP sent successfully. Please check your phone.");
@@ -56,9 +80,8 @@ const Signup = () => {
         setMessage(data.error || "Failed to sign up");
       }
     } catch (e) {
-      setMessage(e + "Netrowk error pls try again");
+      setMessage("Network error. Please try again.", e.message);
     }
-
     setLoading(false);
   };
 
@@ -69,89 +92,70 @@ const Signup = () => {
     try {
       const response = await fetch(`${backend_url}/user/verify-otp`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          phone: formData.phone,
-          otp: otp,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone: formData.phone, otp }),
       });
 
       const data = await response.json();
-
       if (response.ok) {
-        setMessage("Signup successful! Redirecting to login...");
-        // Redirect to login after a delay
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
+        setMessage("Signup successful! Redirecting...");
+        setTimeout(() => navigate("/login"), 2000);
       } else {
         setMessage(data.error || "Invalid OTP");
       }
     } catch (e) {
-      setMessage(e + "Network error. Please try again.");
+      setMessage("Network error. Please try again.", e.message);
     }
-
     setLoading(false);
   };
 
-  const handleOAuthLogin = (provider) => {
-    setMessage(`⚙️ ${provider} login is under work. Enter details manually.`);
-    // You can later enable this redirect when ready
-    // window.location.href = `/api/auth/${provider}`;
+  const handleGoogleSignup = () => {
+    alert("work on progress");
   };
-
+  const handleFacebookSignup = () => {
+    alert("work on progress");
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden w-full max-w-4xl">
         <div className="md:flex">
-          {/* Left side - Illustration and info */}
+          {/* Left Info */}
           <div className="md:w-1/2 bg-gradient-to-b from-blue-600 to-indigo-700 text-white p-10 hidden md:flex flex-col justify-center">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold mb-4">
-                Join the HireBuddy Network
-              </h2>
-              <p className="opacity-90">
-                Sign up to connect with trusted local buddies and unlock a
-                seamless experience for tours, assistance, shopping, and more.
-              </p>
-            </div>
-            <div className="space-y-4">
+            <h2 className="text-3xl font-bold mb-4">Join HireBuddy Network</h2>
+            <p className="opacity-90">
+              Sign up to connect with trusted buddies and unlock experiences.
+            </p>
+            <div className="space-y-4 mt-6">
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>Verified and reliable buddies for every service</span>
+                <span>Verified buddies for every service</span>
               </div>
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>Secure sign-up with OTP and role-based access</span>
+                <span>Secure sign-up with OTP & role-based access</span>
               </div>
               <div className="flex items-center">
                 <FaCheckCircle className="text-green-300 mr-2" />
-                <span>
-                  Flexible booking options for hourly or full-day services
-                </span>
+                <span>Flexible booking options</span>
               </div>
             </div>
           </div>
 
-          {/* Right side - Form */}
+          {/* Right Form */}
           <div className="md:w-1/2 p-8">
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
               <h1 className="text-3xl font-bold text-gray-800">
                 Create Account
               </h1>
               <p className="text-gray-600 mt-2">
-                {step === 1
-                  ? "Fill in your details to get started"
-                  : "Enter the OTP sent to your phone"}
+                {step === 1 ? "Fill in your details" : "Enter OTP"}
               </p>
             </div>
 
             {message && (
               <div
                 className={`p-3 rounded-lg mb-6 ${
-                  message.includes("successful")
+                  message.includes("success")
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700"
                 }`}
@@ -162,233 +166,166 @@ const Signup = () => {
 
             {step === 1 ? (
               <form onSubmit={handleSignup} className="space-y-4">
-                <div className="space-y-4">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaUser className="text-gray-400" />
-                    </div>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Full Name"
-                      required
-                    />
-                  </div>
+                {/* Name */}
+                <div className="relative">
+                  <FaUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="block w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Full Name"
+                  />
+                  {errors.name && (
+                    <p className="text-red-500 text-sm">{errors.name}</p>
+                  )}
+                </div>
 
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaEnvelope className="text-gray-400" />
-                    </div>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Email Address"
-                      required
-                    />
-                  </div>
+                {/* Email */}
+                <div className="relative">
+                  <FaEnvelope className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="block w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Email Address"
+                  />
+                  {errors.email && (
+                    <p className="text-red-500 text-sm">{errors.email}</p>
+                  )}
+                </div>
 
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaPhone className="text-gray-400" />
-                    </div>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      onFocus={() => {
-                        if (!formData.phone.startsWith("+91")) {
-                          setFormData((prev) => ({ ...prev, phone: "+91" }));
-                        }
-                      }}
-                      className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Phone Number"
-                      required
-                    />
-                  </div>
+                {/* Phone */}
+                <div className="relative">
+                  <FaPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="block w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Phone (e.g. +91755552671)"
+                  />
+                  {errors.phone && (
+                    <p className="text-red-500 text-sm">{errors.phone}</p>
+                  )}
+                </div>
 
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <FaLock className="text-gray-400" />
-                    </div>
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      name="password"
-                      value={formData.password}
-                      onChange={handleInputChange}
-                      className="block w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Password"
-                      required
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <FaEyeSlash className="text-gray-400" />
-                      ) : (
-                        <FaEye className="text-gray-400" />
-                      )}
-                    </button>
-                  </div>
+                {/* Password */}
+                <div className="relative">
+                  <FaLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={formData.password}
+                    onChange={handleInputChange}
+                    className="block w-full pl-10 pr-10 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    placeholder="Password"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+                  {errors.password && (
+                    <p className="text-red-500 text-sm">{errors.password}</p>
+                  )}
+                </div>
 
-                  {/* Role selection as radio buttons */}
-                  <div className="space-y-2">
-                    <span className="block text-sm font-medium text-gray-700 mb-1">
-                      Role
-                    </span>
-                    <div className="flex space-x-6">
-                      <label className="inline-flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name="role"
-                          value="customer"
-                          checked={formData.role === "customer"}
-                          onChange={handleInputChange}
-                          className="form-radio text-blue-600"
-                        />
-                        <span>Customer</span>
-                      </label>
-                      <label className="inline-flex items-center space-x-2">
-                        <input
-                          type="radio"
-                          name="role"
-                          value="buddy"
-                          checked={formData.role === "buddy"}
-                          onChange={handleInputChange}
-                          className="form-radio text-blue-600"
-                        />
-                        <span>Buddy</span>
-                      </label>
-                    </div>
+                {/* Role */}
+                <div>
+                  <span className="block text-sm font-medium text-gray-700 mb-1">
+                    Role
+                  </span>
+                  <div className="flex space-x-6">
+                    <label className="inline-flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name="role"
+                        value="customer"
+                        checked={formData.role === "customer"}
+                        onChange={handleInputChange}
+                      />
+                      <span>Customer</span>
+                    </label>
+                    <label className="inline-flex items-center space-x-2">
+                      <input
+                        type="radio"
+                        name="role"
+                        value="buddy"
+                        checked={formData.role === "buddy"}
+                        onChange={handleInputChange}
+                      />
+                      <span>Buddy</span>
+                    </label>
                   </div>
                 </div>
 
+                {/* Submit */}
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {loading ? "Sending OTP..." : "Sign Up"}
                 </button>
-
-                <div className="relative my-6">
-                  <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-300"></div>
-                  </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white text-gray-500">
-                      Or continue with
-                    </span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    type="button"
-                    onClick={() => handleOAuthLogin("google")}
-                    className="inline-flex justify-center items-center space-x-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
-                  >
-                    <FaGoogle className="text-red-500" />
-                    <span>Google</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleOAuthLogin("facebook")}
-                    className="inline-flex justify-center items-center space-x-2 py-3 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
-                  >
-                    <FaFacebook className="text-blue-600" />
-                    <span>Facebook</span>
-                  </button>
-                </div>
-
-                <div className="text-center mt-6">
-                  <p className="text-gray-600">
-                    Already have an account?{" "}
-                    <Link
-                      to="/login"
-                      className="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                      Log in
-                    </Link>
-                  </p>
-                </div>
               </form>
             ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-6">
-                <div className="text-center">
-                  <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100">
-                    <FaPhone className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <h2 className="mt-4 text-xl font-medium text-gray-900">
-                    Verify Your Phone
-                  </h2>
-                  <p className="mt-2 text-sm text-red-600">
-                    {/* We've sent a verification code to {formData.phone} */}
-                    Free Twilio subscription ended. Enter otp 12345
-                  </p>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="otp"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Verification Code
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      name="otp"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                      className="block w-full px-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center text-xl tracking-widest"
-                      placeholder="Enter 5-digit code"
-                      required
-                    />
-                  </div>
-                </div>
-
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <h2 className="text-xl font-semibold text-center">
+                  Verify OTP
+                </h2>
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  className="w-full text-center px-3 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 tracking-widest"
+                  placeholder="Enter OTP"
+                />
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out disabled:opacity-50"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 disabled:opacity-50"
                 >
                   {loading ? "Verifying..." : "Verify OTP"}
                 </button>
-
-                <div className="text-center">
-                  <button
-                    type="button"
-                    onClick={() => setStep(1)}
-                    className="text-blue-600 hover:text-blue-800 font-medium"
-                  >
-                    Change phone number
-                  </button>
-                </div>
-
-                <div className="text-center mt-4">
-                  <p className="text-sm text-gray-600">
-                    Didn't receive the code?{" "}
-                    <button
-                      type="button"
-                      onClick={handleSignup}
-                      className="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                      Resend OTP
-                    </button>
-                  </p>
-                </div>
               </form>
             )}
+
+            <div className="my-6 flex items-center">
+              <hr className="flex-grow border-gray-300" />
+              <span className="px-3 text-gray-500 text-sm">
+                or sign up with
+              </span>
+              <hr className="flex-grow border-gray-300" />
+            </div>
+
+            <div className="space-y-3">
+              <button
+                type="button"
+                onClick={handleGoogleSignup} // implement later
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-300 
+               text-gray-700 font-medium hover:bg-red-50 transition-colors duration-200"
+              >
+                <FaGoogle className="text-red-500 text-lg" />
+                <span>Continue with Google</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleFacebookSignup} // implement later
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-lg border border-gray-300 
+               text-gray-700 font-medium hover:bg-blue-50 transition-colors duration-200"
+              >
+                <FaFacebook className="text-blue-600 text-lg" />
+                <span>Continue with Facebook</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
