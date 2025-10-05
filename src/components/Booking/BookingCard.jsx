@@ -1,7 +1,4 @@
 // components/BookingCard.jsx
-import MessagesSection from "./MessagesSection";
-import SocketMessages from "./SocketMessages";
-
 const BookingCard = ({
   booking = {
     _id: "1",
@@ -11,19 +8,10 @@ const BookingCard = ({
     location: "San Francisco, CA",
     status: "Confirmed",
   },
-  messages = [],
-  newMessage = "",
-  setNewMessage,
-  fetchMessages,
-  sendMessage,
-  userId,
-  selectedBooking,
-  setSelectedBooking,
-  chatMode,
-  setChatMode,
   updateBookingStatus,
+  setActiveChat,
+  activeChat,
 }) => {
-  const isExpanded = selectedBooking === booking._id;
   const statusColors = {
     Confirmed: "bg-green-50 text-green-700 border-green-200",
     confirmed: "bg-green-50 text-green-700 border-green-200",
@@ -32,6 +20,8 @@ const BookingCard = ({
     Declined: "bg-red-50 text-red-700 border-red-200",
     declined: "bg-red-50 text-red-700 border-red-200",
   };
+
+  const isChatActive = activeChat?.bookingId === booking._id;
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 hover:border-blue-200 hover:shadow-lg transition-all duration-300 overflow-hidden">
@@ -78,7 +68,7 @@ const BookingCard = ({
         {/* Actions */}
         <div className="flex flex-col sm:flex-row gap-2 pt-3 border-t border-gray-100">
           {updateBookingStatus && booking.status === "Pending" && (
-            <div className="flex gap-2">
+            <div className="flex gap-2 mb-2 sm:mb-0">
               <button
                 onClick={() => updateBookingStatus(booking._id, "Confirmed")}
                 className="flex-1 sm:flex-none bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2"
@@ -100,61 +90,37 @@ const BookingCard = ({
             </div>
           )}
 
-          <button
-            onClick={() => {
-              setSelectedBooking(booking._id);
-              setChatMode("history");
-              if (fetchMessages) fetchMessages(booking._id);
-            }}
-            className={`flex-1 sm:flex-none py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
-              isExpanded && chatMode === "history"
-                ? "bg-blue-600 text-white"
-                : "bg-blue-50 text-blue-700 hover:bg-blue-100"
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-            </svg>
-            Messages
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setActiveChat({ bookingId: booking._id, mode: 'history' })}
+              className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                isChatActive && activeChat.mode === 'history'
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-blue-50 text-blue-700 hover:bg-blue-100 hover:shadow-sm"
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              Messages
+            </button>
 
-          <button
-            onClick={() => {
-              setSelectedBooking(booking._id);
-              setChatMode("live");
-            }}
-            className={`flex-1 sm:flex-none py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
-              isExpanded && chatMode === "live"
-                ? "bg-purple-600 text-white"
-                : "bg-purple-50 text-purple-700 hover:bg-purple-100"
-            }`}
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-            </svg>
-            Live Chat
-          </button>
+            <button
+              onClick={() => setActiveChat({ bookingId: booking._id, mode: 'live' })}
+              className={`flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+                isChatActive && activeChat.mode === 'live'
+                  ? "bg-purple-600 text-white shadow-md"
+                  : "bg-purple-50 text-purple-700 hover:bg-purple-100 hover:shadow-sm"
+              }`}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Live Chat
+            </button>
+          </div>
         </div>
       </div>
-
-      {/* Expanded Sections */}
-      {isExpanded && chatMode === "history" && (
-        <div className="border-t border-gray-100 bg-gray-50">
-          <MessagesSection
-            messages={messages}
-            newMessage={newMessage}
-            setNewMessage={setNewMessage}
-            sendMessage={sendMessage}
-            userId={userId}
-          />
-        </div>
-      )}
-
-      {isExpanded && chatMode === "live" && (
-        <div className="border-t border-gray-100">
-          <SocketMessages bookingId={booking._id} userId={userId} />
-        </div>
-      )}
     </div>
   );
 };

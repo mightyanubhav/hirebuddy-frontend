@@ -1,6 +1,7 @@
 // components/BookingsTab.jsx
 import { useState } from "react";
 import BookingCard from "./BookingCard";
+import ChatWindow from "./ChatWindow";
 
 const BookingsTab = ({
   bookings = [
@@ -35,8 +36,7 @@ const BookingsTab = ({
   userId = "user123",
   updateBookingStatus,
 }) => {
-  const [selectedBooking, setSelectedBooking] = useState(null);
-  const [chatMode, setChatMode] = useState(null);
+  const [activeChat, setActiveChat] = useState(null); // { bookingId, mode: 'history' | 'live' }
 
   if (loading) {
     return (
@@ -62,25 +62,37 @@ const BookingsTab = ({
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
-      {bookings.map((booking) => (
-        <BookingCard
-          key={booking._id}
-          booking={booking}
+    <div className="relative">
+      {/* Chat Window Overlay */}
+      {activeChat && (
+        <ChatWindow
+          activeChat={activeChat}
+          setActiveChat={setActiveChat}
           messages={messages}
           newMessage={newMessage}
           setNewMessage={setNewMessage}
           fetchMessages={fetchMessages}
           sendMessage={sendMessage}
           userId={userId}
-          selectedBooking={selectedBooking}
-          setSelectedBooking={setSelectedBooking}
-          chatMode={chatMode}
-          setChatMode={setChatMode}
-          updateBookingStatus={updateBookingStatus}
+          booking={bookings.find(b => b._id === activeChat.bookingId)}
         />
-      ))}
+      )}
+
+      {/* Bookings Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        {bookings.map((booking) => (
+          <BookingCard
+            key={booking._id}
+            booking={booking}
+            userId={userId}
+            updateBookingStatus={updateBookingStatus}
+            setActiveChat={setActiveChat}
+            activeChat={activeChat}
+          />
+        ))}
+      </div>
     </div>
   );
 };
+
 export default BookingsTab;
