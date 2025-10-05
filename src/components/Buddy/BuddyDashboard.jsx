@@ -103,7 +103,12 @@ const BuddyDashboard = () => {
         <Header
           onProfileClick={() => setShowProfileModal(true)}
           onAvailabilityClick={() => setShowAvailabilityModal(true)}
-          onLogout={() => {
+          onLogout={async () => {
+            const token = user?.token;
+             await fetch(`${backend_url}/user/logout`, {
+              method: "POST", 
+              headers: { Authorization: `Bearer ${token}` },
+            });
             localStorage.removeItem("token");
             navigate("/login");
           }}
