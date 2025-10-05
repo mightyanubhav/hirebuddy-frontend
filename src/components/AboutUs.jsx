@@ -154,11 +154,11 @@ const AboutUs = () => {
         <section className="px-6 py-12 bg-blue-600 text-white">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
             <div>
-              <div className="text-3xl font-bold mb-2">50+</div>
+              <div className="text-3xl font-bold mb-2">5+</div>
               <div className="text-blue-100">Team Members</div>
             </div>
             <div>
-              <div className="text-3xl font-bold mb-2">500+</div>
+              <div className="text-3xl font-bold mb-2">50+</div>
               <div className="text-blue-100">Happy Clients</div>
             </div>
             <div>

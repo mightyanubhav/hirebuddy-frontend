@@ -41,8 +41,8 @@ const WhyUs = () => {
   ];
 
   const stats = [
-    { number: '2,50,000+', label: 'Verified Buddies' },
-    { number: '10,00,000+', label: 'Happy Customers' },
+    { number: '25+', label: 'Verified Buddies' },
+    { number: '10+', label: 'Happy Customers' },
     { number: '99.7%', label: 'Verification Success Rate' },
     { number: '4.8/5', label: 'Customer Rating' },
     { number: '48h', label: 'Avg. Verification Time' },
