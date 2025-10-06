@@ -5,6 +5,7 @@ import Body from "../Landing/Body";
 import { MarqueeSection } from "./Marquee";
 import { backend_url } from "../../context/HardCodedValues";
 import Footer from "./Footer";
+import ChatBot from "../ChatBot";
 
 const Landing = () => {
   useEffect(() => {
@@ -29,6 +30,7 @@ const Landing = () => {
       <MarqueeSection />
       <Body />
       <Footer/>
+      <ChatBot/>
     </>
   );
 };
