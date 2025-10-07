@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { FaRobot, FaPaperPlane, FaTimes, FaMinus } from "react-icons/fa";
-
+import { backend_url } from "../context/HardCodedValues";
 const ChatBot = () => {
   const [messages, setMessages] = useState([
     { 
@@ -31,30 +31,48 @@ const ChatBot = () => {
     }
   }, [showChat, isMinimized]);
 
-  const handleSend = async () => {
-    if (!input.trim()) return;
+const handleSend = async () => {
+  if (!input.trim()) return;
 
-    const userMessage = { 
-      sender: "user", 
-      text: input,
-      timestamp: new Date()
-    };
-    setMessages(prev => [...prev, userMessage]);
-    setInput("");
-
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const reply = generateReply(input);
-      setMessages(prev => [...prev, { 
-        sender: "bot", 
-        text: reply.text, 
-        options: reply.options,
-        timestamp: new Date()
-      }]);
-      setIsTyping(false);
-    }, 800);
+  const userMessage = { 
+    sender: "user", 
+    text: input,
+    timestamp: new Date()
   };
+  setMessages(prev => [...prev, userMessage]);
+  setInput("");
+  setIsTyping(true);
+
+  try {
+    const res = await fetch(`${backend_url}/chatbot`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input }),
+    });
+
+    const data = await res.json();
+    const botMessage = {
+      sender: "bot",
+      text: data.reply || "I'm having trouble right now. Try again later!",
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, botMessage]);
+  } catch (err) {
+    console.error("Chatbot fetch error:", err);
+    setMessages(prev => [
+      ...prev,
+      {
+        sender: "bot",
+        text: "⚠️ I'm facing a connection issue. Please try again later.",
+        timestamp: new Date(),
+      },
+    ]);
+  } finally {
+    setIsTyping(false);
+  }
+};
+
 
   const generateReply = (input) => {
     const text = input.toLowerCase();
