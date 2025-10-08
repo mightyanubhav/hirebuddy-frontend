@@ -51,12 +51,12 @@ const CombinedNavigation = ({
   return (
     <div className={`bg-white border-b border-gray-200 transition-all duration-300 ${
       isSticky 
-        ? "sticky top-0 z-70 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" 
+        ? "sticky top-0 z-20 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm" 
         : ""
     }`}>
       {/* Combined Navigation Bar */}
       <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-        isSticky ? "py-3" : "pt-12 pb-4"
+        isSticky ? "py-2" : "pt-12 pb-4"
       }`}>
         <div className="flex items-center justify-between">
           {/* Navigation Tabs */}
