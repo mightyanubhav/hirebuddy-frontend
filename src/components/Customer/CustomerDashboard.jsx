@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
-import NavigationTabs from "./NavigationTabs";
 import BuddiesTab from "./BuddiesTab";
 import BookingsTab from "../Booking/BookingsTab";
 import BookingModal from "../Booking/BookingModel";
@@ -13,13 +12,18 @@ import { useCredits } from "../hooks/useCredits";
 import { useBuddies } from "../hooks/useBuddies";
 import { useBookings } from "../hooks/useBookings";
 import { useBookingHandler } from "../hooks/useBookingHandler";
+import CombinedNavigation from "./CombinedNavigation";
 
 const CustomerDashboard = () => {
   const { user } = useAuth();
   const token = user?.token;
 
   const [activeTab, setActiveTab] = useState("buddies");
-  const [filters, setFilters] = useState({ location: "", expertise: "", date: "" });
+  const [filters, setFilters] = useState({
+    location: "",
+    expertise: "",
+    date: "",
+  });
   const [selectedBuddy, setSelectedBuddy] = useState(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [bookingDate, setBookingDate] = useState("");
@@ -38,7 +42,11 @@ const CustomerDashboard = () => {
 
   const userId = getUserId();
   const { credits, setCredits, fetchCredits } = useCredits(token);
-  const { buddies, loading: buddiesLoading, fetchBuddies } = useBuddies(token, filters);
+  const {
+    buddies,
+    loading: buddiesLoading,
+    fetchBuddies,
+  } = useBuddies(token, filters);
   const {
     bookings,
     messages,
@@ -48,7 +56,12 @@ const CustomerDashboard = () => {
     fetchMessages,
   } = useBookings(token);
 
-  const { handleBooking } = useBookingHandler(token, selectedBuddy, setCredits, fetchBookings);
+  const { handleBooking } = useBookingHandler(
+    token,
+    selectedBuddy,
+    setCredits,
+    fetchBookings
+  );
 
   useEffect(() => {
     fetchCredits();
@@ -65,7 +78,10 @@ const CustomerDashboard = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ bookingId: selectedBooking, content: newMessage }),
+        body: JSON.stringify({
+          bookingId: selectedBooking,
+          content: newMessage,
+        }),
       });
       if (res.ok) {
         setNewMessage("");
@@ -81,21 +97,23 @@ const CustomerDashboard = () => {
       <Header credits={credits} setCredits={setCredits} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
+        
+        <CombinedNavigation
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          filters={filters}
+          setFilters={setFilters}
+          fetchBuddies={fetchBuddies}
+        />
         {activeTab === "buddies" && (
           <BuddiesTab
             loading={buddiesLoading}
             buddies={buddies}
-            filters={filters}
-            setFilters={setFilters}
-            fetchBuddies={fetchBuddies}
             setSelectedBuddy={setSelectedBuddy}
             setShowBookingModal={setShowBookingModal}
             credits={credits}
           />
         )}
-
         {activeTab === "bookings" && (
           <BookingsTab
             loading={bookingsLoading}
@@ -119,7 +137,11 @@ const CustomerDashboard = () => {
           setBookingDate={setBookingDate}
           setBookingLocation={setBookingLocation}
           setShowBookingModal={setShowBookingModal}
-          handleBooking={(e) => handleBooking(e, bookingDate, bookingLocation, () => setShowBookingModal(false))}
+          handleBooking={(e) =>
+            handleBooking(e, bookingDate, bookingLocation, () =>
+              setShowBookingModal(false)
+            )
+          }
         />
       )}
     </div>

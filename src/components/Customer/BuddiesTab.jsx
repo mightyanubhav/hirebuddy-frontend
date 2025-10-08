@@ -1,25 +1,16 @@
 import BuddyCard from "./BuddyCard";
-import Filters from "./Filters";
+
 
 const BuddiesTab = ({
   loading,
   buddies,
-  filters,
-  setFilters,
-  fetchBuddies,
   setSelectedBuddy,
   setShowBookingModal,
   credits,
 }) => {
   return (
     <div className="py-6">
-      {/* Filters Section */}
-      <Filters
-        filters={filters}
-        setFilters={setFilters}
-        fetchBuddies={fetchBuddies}
-      />
-
+     
       {/* Loading Spinner */}
       {loading ? (
         <div className="flex justify-center items-center py-12">
