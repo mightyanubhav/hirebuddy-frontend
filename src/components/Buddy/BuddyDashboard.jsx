@@ -28,7 +28,7 @@ const BuddyDashboard = () => {
   const [showAvailabilityModal, setShowAvailabilityModal] = useState(false);
 
   const { user } = useAuth();
-
+  const { logout } = useAuth();
   // ===== Fetch Functions =====
   const fetchBookings = useCallback(
     async (status = "") => {
@@ -104,12 +104,13 @@ const BuddyDashboard = () => {
           onProfileClick={() => setShowProfileModal(true)}
           onAvailabilityClick={() => setShowAvailabilityModal(true)}
           onLogout={async () => {
-            const token = user?.token;
+            const token = user?.token;           
              await fetch(`${backend_url}/user/logout`, {
               method: "POST", 
               headers: { Authorization: `Bearer ${token}` },
             });
-            localStorage.removeItem("token");
+            logout(); 
+          
             navigate("/login");
           }}
         />

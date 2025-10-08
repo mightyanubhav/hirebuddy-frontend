@@ -10,8 +10,16 @@ const Header = ({ credits, setCredits }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const { logout } = useAuth();
+  const handleLogout = async () => {
+    const token = user?.token;
+    await fetch(`${backend_url}/user/logout`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    logout();
+
     navigate("/login");
   };
 
@@ -82,7 +90,6 @@ const Header = ({ credits, setCredits }) => {
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-
           {/* Logo Section */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
@@ -96,12 +103,15 @@ const Header = ({ credits, setCredits }) => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-4">
-            
             {/* Credits Display */}
             <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
               <div className="flex flex-col items-end">
-                <span className="text-xs text-gray-500 font-medium">Credits</span>
-                <span className="text-lg font-bold text-gray-900">{credits}</span>
+                <span className="text-xs text-gray-500 font-medium">
+                  Credits
+                </span>
+                <span className="text-lg font-bold text-gray-900">
+                  {credits}
+                </span>
               </div>
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
             </div>
@@ -115,9 +125,18 @@ const Header = ({ credits, setCredits }) => {
               {isProcessing ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
               ) : (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                    d="M12 4v16m8-8H4" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 4v16m8-8H4"
+                  />
                 </svg>
               )}
               <span>{isProcessing ? "Processing" : "Buy Credits"}</span>
@@ -129,7 +148,9 @@ const Header = ({ credits, setCredits }) => {
             {/* User Profile */}
             <div className="flex items-center gap-3">
               <div className="flex flex-col items-end">
-                <p className="text-sm font-medium text-gray-900">{user?.name || "User"}</p>
+                <p className="text-sm font-medium text-gray-900">
+                  {user?.name || "User"}
+                </p>
                 <p className="text-xs text-gray-500">Customer</p>
               </div>
               <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -145,9 +166,18 @@ const Header = ({ credits, setCredits }) => {
               className="text-gray-600 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg transition-colors"
               title="Logout"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
               </svg>
             </button>
           </div>
@@ -164,9 +194,22 @@ const Header = ({ credits, setCredits }) => {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
-              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                  d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              <svg
+                className="w-6 h-6 text-gray-700"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d={
+                    mobileMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M4 6h16M4 12h16M4 18h16"
+                  }
+                />
               </svg>
             </button>
           </div>
@@ -175,12 +218,13 @@ const Header = ({ credits, setCredits }) => {
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4 space-y-3">
-            
             {/* User Info Card */}
             <div className="bg-gray-50 p-4 rounded-lg">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <p className="text-sm font-medium text-gray-900">{user?.name || "User"}</p>
+                  <p className="text-sm font-medium text-gray-900">
+                    {user?.name || "User"}
+                  </p>
                   <p className="text-xs text-gray-500">Customer</p>
                 </div>
                 <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center">
@@ -208,9 +252,18 @@ const Header = ({ credits, setCredits }) => {
                 {isProcessing ? (
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                      d="M12 4v16m8-8H4" />
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 )}
                 <span>{isProcessing ? "Processing" : "Buy Credits"}</span>
@@ -221,9 +274,18 @@ const Header = ({ credits, setCredits }) => {
                 onClick={handleLogout}
                 className="w-full bg-white hover:bg-gray-50 text-gray-700 px-4 py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 border border-gray-200 text-sm"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
                 </svg>
                 <span>Logout</span>
               </button>
