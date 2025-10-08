@@ -146,3 +146,24 @@ html {
   animation: fadeIn 0.2s ease-out;
 }
 
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-10px);
+  }
+  40% {
+    transform: translateY(0);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+  80% {
+    transform: translateY(0);
+  }
+}
+
+.jump-on-load {
+  animation: jump 0.8s ease-in-out 2;
+}
