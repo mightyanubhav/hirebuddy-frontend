@@ -25,7 +25,7 @@ const NavigationTabs = ({ activeTab, onTabChange }) => {
             onClick={() => onTabChange(tab.id)}
             className={`
               relative flex flex-col sm:flex-row items-center justify-center
-              sm:justify-start px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap
+              sm:justify-start px-4 sm:px-6 py-3 pt-4 text-sm font-medium whitespace-nowrap
               transition-all duration-200
               ${
                 activeTab === tab.id

@@ -56,7 +56,7 @@ const CombinedNavigation = ({
     }`}>
       {/* Combined Navigation Bar */}
       <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-        isSticky ? "py-2" : "pt-12 pb-4"
+        isSticky ? "py-2.5" : "pt-12 pb-4"
       }`}>
         <div className="flex items-center justify-between">
           {/* Navigation Tabs */}
