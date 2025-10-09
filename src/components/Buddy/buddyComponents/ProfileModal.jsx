@@ -11,12 +11,23 @@ const ProfileModal = ({ profileData, onProfileDataChange, onClose, user }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-  setPreviewImage(
-    profileData.profileImage?.url ||
-    "https://cdn-icons-png.flaticon.com/512/149/149071.png"
-  );
-}, [profileData.profileImage]);
+    // Only set preview image from profileData if profileImage is not a File object
+    if (profileData.profileImage && !(profileData.profileImage instanceof File)) {
+      setPreviewImage(
+        profileData.profileImage?.url ||
+        "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+      );
+    }
+  }, [profileData.profileImage]);
 
+  // Clean up blob URLs when component unmounts
+  useEffect(() => {
+    return () => {
+      if (previewImage && previewImage.startsWith('blob:')) {
+        URL.revokeObjectURL(previewImage);
+      }
+    };
+  }, [previewImage]);
 
   const updateProfile = async (e) => {
     e.preventDefault();
@@ -108,7 +119,9 @@ const ProfileModal = ({ profileData, onProfileDataChange, onClose, user }) => {
       return;
     }
 
-    setPreviewImage(URL.createObjectURL(file));
+    // Create and set preview URL immediately
+    const previewUrl = URL.createObjectURL(file);
+    setPreviewImage(previewUrl);
     onProfileDataChange({ ...profileData, profileImage: file });
   };
 
@@ -175,6 +188,9 @@ const ProfileModal = ({ profileData, onProfileDataChange, onClose, user }) => {
                 src={previewImage}
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-lg transition-all duration-300 group-hover:border-blue-600"
+                onError={(e) => {
+                  e.target.src = "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                }}
               />
               <div className="absolute inset-0 bg-black bg-opacity-40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <svg

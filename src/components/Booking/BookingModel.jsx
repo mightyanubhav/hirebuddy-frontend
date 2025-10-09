@@ -19,17 +19,25 @@ const BookingModal = ({
     <div className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-300 scale-100 hover:scale-[1.02]">
         {/* Header */}
-        <div className="bg-blue-600 p-6 rounded-t-2xl">
+        <div className="bg-gray-600 p-6 rounded-t-2xl">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="h-12 w-12 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm">
-                <span className="text-white font-bold text-lg">
-                  {selectedBuddy.name?.charAt(0).toUpperCase() || "B"}
-                </span>
+              <div className="h-12 w-12 rounded-xl overflow-hidden bg-white/20 flex items-center justify-center backdrop-blur-sm shadow-md">
+                {selectedBuddy?.profileImage?.url ? (
+                  <img
+                    src={selectedBuddy.profileImage.url}
+                    alt={selectedBuddy.name || "Buddy"}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <span className="text-white font-bold text-lg">
+                    {selectedBuddy.name?.charAt(0).toUpperCase() || "B"}
+                  </span>
+                )}
               </div>
               <div>
                 <h2 className="text-xl font-bold text-white">Book Session</h2>
-                <p className="text-blue-100 text-sm">
+                <p className="text-gray-100 text-sm">
                   with {selectedBuddy.name}
                 </p>
               </div>
@@ -61,7 +69,7 @@ const BookingModal = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
               <svg
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -82,7 +90,7 @@ const BookingModal = ({
                 min={today}
                 value={bookingDate}
                 onChange={(e) => setBookingDate(e.target.value)}
-                className="w-full border-2 border-gray-200 rounded-xl py-3 px-4 pr-10 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm"
+                className="w-full border-2 border-gray-200 rounded-xl py-3 px-4 pr-10 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-100 transition-all duration-200 bg-white shadow-sm"
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <svg
@@ -109,7 +117,7 @@ const BookingModal = ({
           <div className="space-y-2">
             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700">
               <svg
-                className="w-4 h-4 text-blue-600"
+                className="w-4 h-4 text-gray-600"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -135,8 +143,8 @@ const BookingModal = ({
                 required
                 value={bookingLocation}
                 onChange={(e) => setBookingLocation(e.target.value)}
-                placeholder="Enter meeting location (e.g., Zoom, Google Meet, Office address)"
-                className="w-full border-2 border-gray-200 rounded-xl py-3 px-4 pr-10 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-200 bg-white shadow-sm placeholder-gray-400"
+                placeholder="Enter location (e.g., Station name, Point address)"
+                className="w-full border-2 border-gray-200 rounded-xl py-3 px-4 pr-10 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-100 transition-all duration-200 bg-white shadow-sm placeholder-gray-400"
               />
               <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                 <svg
@@ -160,12 +168,12 @@ const BookingModal = ({
           </div>
 
           {/* Cost Summary */}
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-100">
+          <div className="bg-gradient-to-r from-gray-50 to-purple-50 rounded-xl p-4 border border-gray-100">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm font-medium text-gray-600">
                 Session Cost
               </span>
-              <span className="text-lg font-bold text-blue-700">
+              <span className="text-lg font-bold text-gray-700">
                 ₹{selectedBuddy.buddyProfile?.baseRate || "N/A"}
               </span>
             </div>
@@ -200,7 +208,7 @@ const BookingModal = ({
 
             <button
               type="submit"
-              className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-2.5 px-3.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
+              className="flex-1  bg-gray-600  hover:from-gray-700 hover:to-indigo-700 text-white py-2.5 px-3.5 rounded-lg font-semibold transition-all duration-200 hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-sm"
             >
               <svg
                 className="w-4 h-4"

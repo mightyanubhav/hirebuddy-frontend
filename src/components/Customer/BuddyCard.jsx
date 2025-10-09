@@ -36,18 +36,26 @@ const BuddyCard = ({
     bioText.length > 120 ? bioText.slice(0, 120) + "..." : bioText;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200/80 hover:border-blue-200 hover:shadow-xl transition-all duration-300 overflow-hidden group">
+    <div className="bg-white rounded-2xl border border-gray-200/80 hover:border-gray-200 hover:shadow-xl transition-all duration-300 overflow-hidden group">
       <div className="p-5 sm:p-6">
         {/* Header Section - Stacked on Mobile */}
         <div className="flex flex-col gap-4 mb-4">
           {/* Top Row: Avatar + Name + Rating */}
           <div className="flex items-start gap-3">
             <div className="relative flex-shrink-0">
-              <div className="h-14 w-14 rounded-2xl  bg-gray-200 flex items-center justify-center shadow-lg group-hover:shadow-blue-200/50 transition-shadow duration-300">
-                <span className="text-blue-600 font-bold text-lg">
-                  {buddy.name ? buddy.name.charAt(0).toUpperCase() : "B"}
-                </span>
-              </div>
+              {buddy?.profileImage?.url ? (
+                <img
+                  src={buddy.profileImage.url}
+                  alt={buddy.name || "Buddy"}
+                  className="h-14 w-14 rounded-2xl object-cover shadow-lg group-hover:shadow-gray-200/50 transition-shadow duration-300"
+                />
+              ) : (
+                <div className="h-14 w-14 rounded-2xl bg-gray-200 flex items-center justify-center shadow-lg group-hover:shadow-gray-200/50 transition-shadow duration-300">
+                  <span className="text-gray-600 font-bold text-lg">
+                    {buddy.name ? buddy.name.charAt(0).toUpperCase() : "B"}
+                  </span>
+                </div>
+              )}
               <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-400 border-2 border-white rounded-full"></div>
             </div>
 
@@ -91,11 +99,11 @@ const BuddyCard = ({
             </div>
           </div>
 
-          {/* Rate Badge - Full Width on Mobile */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 px-4 py-2.5 rounded-xl border border-blue-100 shadow-sm flex items-center justify-between">
-            <div className="flex items-center gap-2">
+          {/* Rate Badge - Sleek & Minimal */}
+          <div className="bg-white px-3 py-2 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between">
+            <div className="flex items-center gap-1.5">
               <svg
-                className="w-5 h-5 text-blue-600"
+                className="w-4 h-4 text-gray-500"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -103,17 +111,17 @@ const BuddyCard = ({
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth={2}
+                  strokeWidth={1.5}
                   d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
                 />
               </svg>
-              <span className="text-xs text-gray-600 font-medium">
+              <span className="text-[13px] text-gray-600 font-normal">
                 Base Rate
               </span>
             </div>
-            <div className="text-xl font-bold text-blue-700">
+            <div className="text-lg font-semibold text-gray-800">
               ₹{profile.baseRate || "N/A"}
-              <span className="text-sm font-medium text-gray-600">/hr</span>
+              <span className="text-xs font-normal text-gray-500">/hr</span>
             </div>
           </div>
         </div>
@@ -125,7 +133,7 @@ const BuddyCard = ({
               {expertise.slice(0, 3).map((skill, index) => (
                 <span
                   key={index}
-                  className="bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 px-3 py-1.5 rounded-lg text-xs font-semibold border border-blue-100/50 shadow-sm"
+                  className="bg-gradient-to-r from-gray-50 to-indigo-50 text-gray-700 px-3 py-1.5 rounded-lg text-xs font-semibold border border-gray-100/50 shadow-sm"
                 >
                   {skill}
                 </span>
@@ -147,7 +155,7 @@ const BuddyCard = ({
           {bioText.length > 120 && (
             <button
               onClick={() => setIsExpanded(!isExpanded)}
-              className="text-blue-600 text-sm font-semibold mt-2 hover:text-blue-700 inline-flex items-center gap-1 transition-colors"
+              className="text-gray-600 text-sm font-semibold mt-2 hover:text-gray-700 inline-flex items-center gap-1 transition-colors"
             >
               <span>{isExpanded ? "Show less" : "Read more"}</span>
               <svg
@@ -229,7 +237,7 @@ const BuddyCard = ({
                     year: "numeric",
                   })}
                   {availableDates.length > 1 && (
-                    <span className="text-blue-600 ml-1">
+                    <span className="text-gray-600 ml-1">
                       +{availableDates.length - 1} dates
                     </span>
                   )}
@@ -246,7 +254,7 @@ const BuddyCard = ({
           className={`w-full py-3.5 px-4 rounded-xl font-semibold text-sm transition-all duration-300 flex items-center justify-center gap-2 group/btn ${
             credits <= 0
               ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl hover:shadow-blue-500/25 active:scale-95"
+              : "bg-stone-500 hover:bg-stone-600 text-white shadow-lg hover:shadow-xl hover:shadow-gray-500/25 active:scale-95"
           }`}
         >
           {credits <= 0 ? (
